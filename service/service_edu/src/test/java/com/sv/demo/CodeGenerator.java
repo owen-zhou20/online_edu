@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.sv.demo;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -26,12 +26,13 @@ public class CodeGenerator {
         // 2、全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("testjava");
+        gc.setOutputDir("D:\\IdeaProjects\\online_edu\\online_edu\\service\\service_edu" + "/src/main/java");
+
+        gc.setAuthor("Owen");
         gc.setOpen(false); //生成后是否打开资源管理器
         gc.setFileOverride(false); //重新生成时文件是否覆盖
         gc.setServiceName("%sService");	//去掉Service接口的首字母I
-        gc.setIdType(IdType.ID_WORKER); //主键策略
+        gc.setIdType(IdType.ID_WORKER_STR); //主键策略
         gc.setDateType(DateType.ONLY_DATE);//定义生成的实体类中日期类型
         gc.setSwagger2(true);//开启Swagger2模式
 
@@ -39,8 +40,8 @@ public class CodeGenerator {
 
         // 3、数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/guli");
-        dsc.setDriverName("com.mysql.jdbc.Driver");
+        dsc.setUrl("jdbc:mysql://localhost:3306/online_edu?serverTimezone=UTC");
+        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("root");
         dsc.setDbType(DbType.MYSQL);
@@ -48,8 +49,8 @@ public class CodeGenerator {
 
         // 4、包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName("edu"); //模块名
-        pc.setParent("com.example.demo");
+        pc.setModuleName("eduservice"); //模块名
+        pc.setParent("com.sv");
         pc.setController("controller");
         pc.setEntity("entity");
         pc.setService("service");
