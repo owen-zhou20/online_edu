@@ -30,6 +30,7 @@ import java.util.List;
 @Api(tags = "teacher management")
 @RestController
 @RequestMapping("/eduservice/teacher")
+@CrossOrigin   //to fix CORS
 public class EduTeacherController {
 
     @Autowired
@@ -80,12 +81,6 @@ public class EduTeacherController {
 
         Page<EduTeacher> pageTeacher = new Page<>(current,limit);
 
-        try{
-            int i = 10/0;
-        }catch (Exception e){
-            throw new SvException(20001,"execute SvException handler");
-        }
-
         String name = teacherQuery.getName();
         Integer level = teacherQuery.getLevel();
         String begin = teacherQuery.getBegin();
@@ -101,10 +96,16 @@ public class EduTeacherController {
         }
         if(!StringUtils.isEmpty(begin)){
             wrapper.ge("gmt_create",begin);
+            //System.out.println(begin);
         }
         if(!StringUtils.isEmpty(end)){
             wrapper.le("gmt_modified",end);
+            //System.out.println(end);
         }
+
+        //sort by create time
+        wrapper.orderByDesc("gmt_modified");
+
 
         teacherService.page(pageTeacher,wrapper);
         long total = pageTeacher.getTotal();
