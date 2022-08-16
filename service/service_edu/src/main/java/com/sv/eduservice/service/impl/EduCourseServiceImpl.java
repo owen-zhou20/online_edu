@@ -31,7 +31,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     // Add course
     @Transactional
     @Override
-    public void saveCourseInfo(CourseInfoVo courseInfoVo) {
+    public String saveCourseInfo(CourseInfoVo courseInfoVo) {
         // 1. Add course info to edu_course table in database
         // CourseInfoVo to EduCourse
         //System.out.println("SubjectParentId ===>"+ courseInfoVo.getSubjectParentId());
@@ -53,5 +53,6 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         courseDescription.setId(cid);
         courseDescriptionService.save(courseDescription);
 
+        return cid;
     }
 }

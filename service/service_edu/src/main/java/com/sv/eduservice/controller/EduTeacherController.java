@@ -125,8 +125,8 @@ public class EduTeacherController {
         }
     }
 
-    //base teacher Id to select this teacher's info
-    @ApiOperation(value = "")
+    //select a teacher's info by this teacher Id
+    @ApiOperation(value = "select a teacher's info by this teacher Id")
     @GetMapping("getTeacher/{id}")
     public R getTeacher(@PathVariable String id){
         EduTeacher eduTeacher = teacherService.getById(id);
@@ -134,7 +134,7 @@ public class EduTeacherController {
     }
 
     //modify this teacher info
-    @ApiOperation(value = "")
+    @ApiOperation(value = "modify this teacher info")
     @PostMapping("updateTeacher")
     public R updateTeacher(@RequestBody EduTeacher eduTeacher){
         boolean rs = teacherService.updateById(eduTeacher);
