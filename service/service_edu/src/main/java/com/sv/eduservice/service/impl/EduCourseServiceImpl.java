@@ -29,8 +29,8 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     private EduCourseDescriptionService courseDescriptionService;
 
     // Add course
-    @Transactional
     @Override
+    @Transactional
     public String saveCourseInfo(CourseInfoVo courseInfoVo) {
         // 1. Add course info to edu_course table in database
         // CourseInfoVo to EduCourse
@@ -54,5 +54,41 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         courseDescriptionService.save(courseDescription);
 
         return cid;
+    }
+
+    // Get course info by course id
+    @Override
+    public CourseInfoVo getCourseInfo(String courseId) {
+        // 1. Select edu_course table from DB
+        EduCourse eduCourse = baseMapper.selectById(courseId);
+        CourseInfoVo courseInfoVo = new CourseInfoVo();
+        BeanUtils.copyProperties(eduCourse, courseInfoVo);
+
+        // 2. Select edu_course_description table from DB
+        EduCourseDescription courseDescription = courseDescriptionService.getById(courseId);
+        //BeanUtils.copyProperties(courseDescription, courseInfoVo);
+        courseInfoVo.setDescription(courseDescription.getDescription());
+
+        return courseInfoVo;
+    }
+
+    // Modify course info
+    @Override
+    @Transactional
+    public void updataCourseInfo(CourseInfoVo courseInfoVo) {
+        // 1. Modify edu_course table from DB
+        EduCourse eduCourse = new EduCourse();
+        BeanUtils.copyProperties(courseInfoVo, eduCourse);
+        int rs = baseMapper.updateById(eduCourse);
+        if(rs == 0){
+            throw new SvException(20001, "fail to modify course info!");
+        }
+
+        // 2. Modify edu_course_description table from DB
+        EduCourseDescription courseDescription = new EduCourseDescription();
+        courseDescription.setId(courseInfoVo.getId());
+        courseDescription.setDescription(courseInfoVo.getDescription());
+        courseDescriptionService.updateById(courseDescription);
+
     }
 }

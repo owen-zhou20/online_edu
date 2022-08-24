@@ -16,4 +16,10 @@ public interface EduCourseService extends IService<EduCourse> {
 
     // Add course
     String saveCourseInfo(CourseInfoVo courseInfoVo);
+
+    // Get course info by course id
+    CourseInfoVo getCourseInfo(String courseId);
+
+    // Modify course info
+    void updataCourseInfo(CourseInfoVo courseInfoVo);
 }
