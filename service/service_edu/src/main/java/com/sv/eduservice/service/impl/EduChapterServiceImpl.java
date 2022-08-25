@@ -9,6 +9,7 @@ import com.sv.eduservice.mapper.EduChapterMapper;
 import com.sv.eduservice.service.EduChapterService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sv.eduservice.service.EduVideoService;
+import com.sv.servicebase.exceptionhandler.SvException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,5 +68,22 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         }
 
         return finalList;
+    }
+
+    // Delect chapter by id
+    @Override
+    public boolean deleteChapter(String chapterId) {
+        // Select chapter id in edu_video table in DB. Don't delete this chapter if get any data
+        QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
+        wrapper.eq("chapter_id",chapterId);
+        int count = videoService.count(wrapper);
+        if(count > 0){ // Don't delete this chapter if can get sections(videos).
+            throw new SvException(20001,"Can't delete this chapter if this chapter has any section(video)");
+        }else{ // Delete this chapter if can't get sections(videos).
+            // Delete this chapter
+            int rs = baseMapper.deleteById(chapterId);
+            return rs>0;
+        }
+
     }
 }

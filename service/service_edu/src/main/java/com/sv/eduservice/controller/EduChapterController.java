@@ -2,6 +2,7 @@ package com.sv.eduservice.controller;
 
 
 import com.sv.commonutils.R;
+import com.sv.eduservice.entity.EduChapter;
 import com.sv.eduservice.entity.chapter.ChapterVo;
 import com.sv.eduservice.service.EduChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,36 @@ public class EduChapterController {
         return R.ok().data("allChapterVideo",list);
     }
 
+    // Add chapter
+    @PostMapping("addChapter")
+    public R addChapter(@RequestBody EduChapter eduChapter){
+        chapterService.save(eduChapter);
+        return R.ok();
+    }
 
+    // Get chapter info by chapter id
+    @GetMapping("getChapterInfo/{chapterId}")
+    public R getChapterInfo(@PathVariable String chapterId){
+        EduChapter eduChapter = chapterService.getById(chapterId);
+        return R.ok().data("chapter",eduChapter);
+    }
+
+    // Modify chapter info
+    @PostMapping("updateChapter")
+    public R updateChapter(@RequestBody EduChapter eduChapter){
+        chapterService.updateById(eduChapter);
+        return R.ok();
+    }
+
+    // Delect chapter by id
+    @DeleteMapping("{chapterId}")
+    public R deleteChapter(@PathVariable String chapterId){
+        boolean flag = chapterService.deleteChapter(chapterId);
+        if(flag){
+            return R.ok();
+        }else{
+            return R.error();
+        }
+    }
 }
 
