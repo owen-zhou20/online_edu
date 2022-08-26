@@ -18,8 +18,8 @@ public class SvException extends RuntimeException{
     @Override
     public String toString() {
         return "SvException{" +
-        "message=" + this.getMessage() +
-        ", code=" + code +
-        '}';
+                "code=" + code + ", " +
+        "message=" + this.getMsg()
+                +"}";
     }
 }

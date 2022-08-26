@@ -77,9 +77,9 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
         wrapper.eq("chapter_id",chapterId);
         int count = videoService.count(wrapper);
-        if(count > 0){ // Don't delete this chapter if can get sections(videos).
-            throw new SvException(20001,"Can't delete this chapter if this chapter has any section(video)");
-        }else{ // Delete this chapter if can't get sections(videos).
+        if(count > 0){ // Don't delete this chapter if can get videos.
+            throw new SvException(20001,"Can't delete this chapter if this chapter has any video");
+        }else{ // Delete this chapter if can't get videos.
             // Delete this chapter
             int rs = baseMapper.deleteById(chapterId);
             return rs>0;
