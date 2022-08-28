@@ -3,6 +3,7 @@ package com.sv.eduservice.service.impl;
 import com.sv.eduservice.entity.EduCourse;
 import com.sv.eduservice.entity.EduCourseDescription;
 import com.sv.eduservice.entity.vo.CourseInfoVo;
+import com.sv.eduservice.entity.vo.CoursePublishVo;
 import com.sv.eduservice.mapper.EduCourseMapper;
 import com.sv.eduservice.service.EduCourseDescriptionService;
 import com.sv.eduservice.service.EduCourseService;
@@ -90,5 +91,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         courseDescription.setDescription(courseInfoVo.getDescription());
         courseDescriptionService.updateById(courseDescription);
 
+    }
+
+    // Get course info by course id
+    @Override
+    public CoursePublishVo publishCourseInfo(String id) {
+        // Call mapper
+        CoursePublishVo publishCourseInfo = baseMapper.getPublishCourseInfo(id);
+        return publishCourseInfo;
     }
 }

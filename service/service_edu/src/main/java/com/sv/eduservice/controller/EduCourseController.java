@@ -3,6 +3,7 @@ package com.sv.eduservice.controller;
 
 import com.sv.commonutils.R;
 import com.sv.eduservice.entity.vo.CourseInfoVo;
+import com.sv.eduservice.entity.vo.CoursePublishVo;
 import com.sv.eduservice.service.EduCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,13 @@ public class EduCourseController {
     public R updateCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
         courseService.updataCourseInfo(courseInfoVo);
         return R.ok();
+    }
+
+    // Get course info by course id
+    @GetMapping("getPublishCourseInfo/{id}")
+    public R getPublishCourseInfo(@PathVariable String id){
+        CoursePublishVo coursePublish= courseService.publishCourseInfo(id);
+        return R.ok().data("coursePublish", coursePublish);
     }
 
 }

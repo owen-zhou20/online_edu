@@ -3,6 +3,7 @@ package com.sv.eduservice.service;
 import com.sv.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sv.eduservice.entity.vo.CourseInfoVo;
+import com.sv.eduservice.entity.vo.CoursePublishVo;
 
 /**
  * <p>
@@ -22,4 +23,7 @@ public interface EduCourseService extends IService<EduCourse> {
 
     // Modify course info
     void updataCourseInfo(CourseInfoVo courseInfoVo);
+
+    // Get course info by course id
+    CoursePublishVo publishCourseInfo(String id);
 }
