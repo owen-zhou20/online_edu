@@ -13,5 +13,6 @@ public class CoursePublishVo {
     private String subjectLevelTwo;
     private String teacherName;
     private String price;// Only for presentation
+    private String status;
 
 }

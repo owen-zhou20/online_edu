@@ -73,7 +73,7 @@ public class EduTeacherController {
 
 
     //4. pagination condition select teacher list
-    @ApiOperation("multiple condition select teachers with paginatio")
+    @ApiOperation("multiple condition select teachers with pagination")
     @PostMapping("pageTeacherCondition/{current}/{limit}")
     public R pageTeacherCondition(@PathVariable long current,
                                   @PathVariable long limit,
