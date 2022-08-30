@@ -1,12 +1,19 @@
 package com.sv.eduservice.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sv.commonutils.R;
 import com.sv.eduservice.entity.EduCourse;
+import com.sv.eduservice.entity.EduTeacher;
 import com.sv.eduservice.entity.vo.CourseInfoVo;
 import com.sv.eduservice.entity.vo.CoursePublishVo;
+import com.sv.eduservice.entity.vo.CourseQuery;
+import com.sv.eduservice.entity.vo.TeacherQuery;
 import com.sv.eduservice.service.EduCourseService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +39,39 @@ public class EduCourseController {
     public R getCourseList(){
         List<EduCourse> courseList = courseService.list(null);
         return R.ok().data("courseList",courseList);
+    }
+
+    //2. pagination condition select course list
+    @ApiOperation("Pagination select courses")
+    @PostMapping("pageCourse/{current}/{limit}")
+    public R pageListCourse(@PathVariable long current,
+                             @PathVariable long limit,
+                            @RequestBody(required = false) CourseQuery courseQuery) {
+        Page<EduCourse> pageCourse =  new Page<>(current,limit);
+
+        String title = courseQuery.getTitle();
+        String status = courseQuery.getStatus();
+        String gmt_create = courseQuery.getGmt_create();
+
+        QueryWrapper wrapper = new QueryWrapper();
+
+        if(!StringUtils.isEmpty(title)){
+            wrapper.like("title",title);
+        }
+        if(!StringUtils.isEmpty(status)){
+            wrapper.eq("status",status);
+        }
+        if(!StringUtils.isEmpty(gmt_create)){
+            wrapper.ge("gmt_create",gmt_create);
+        }
+
+        //sort by create time
+        wrapper.orderByDesc("gmt_create");
+
+        courseService.page(pageCourse, wrapper);
+        long total = pageCourse.getTotal();
+        List<EduCourse> courseList = pageCourse.getRecords();
+        return R.ok().data("total",total).data("rows",courseList);
     }
 
     // Add course
@@ -88,6 +128,14 @@ public class EduCourseController {
         }else {
             return R.error();
         }
+    }
+
+    // Delete course
+    @DeleteMapping("{courseId}")
+    public R deleteCourse(@PathVariable String courseId){
+        courseService.removeCourse(courseId);
+        return R.ok();
+
     }
 
 }

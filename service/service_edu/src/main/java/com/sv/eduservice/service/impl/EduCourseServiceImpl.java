@@ -5,9 +5,11 @@ import com.sv.eduservice.entity.EduCourseDescription;
 import com.sv.eduservice.entity.vo.CourseInfoVo;
 import com.sv.eduservice.entity.vo.CoursePublishVo;
 import com.sv.eduservice.mapper.EduCourseMapper;
+import com.sv.eduservice.service.EduChapterService;
 import com.sv.eduservice.service.EduCourseDescriptionService;
 import com.sv.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sv.eduservice.service.EduVideoService;
 import com.sv.servicebase.exceptionhandler.SvException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     // Course desc service
     @Autowired
     private EduCourseDescriptionService courseDescriptionService;
+
+    // Course video and chapter service
+    @Autowired
+    private EduVideoService videoService;
+
+    @Autowired
+    private EduChapterService chapterService;
 
     // Add course
     @Override
@@ -99,5 +108,24 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         // Call mapper
         CoursePublishVo publishCourseInfo = baseMapper.getPublishCourseInfo(id);
         return publishCourseInfo;
+    }
+
+    // Delete course
+    @Override
+    public void removeCourse(String courseId) {
+        // 1. Delete videos by course id
+        videoService.removeVideoByCourseId(courseId);
+
+        // 2. Delete chapters by course id
+        chapterService.removeChapterByCourseId(courseId);
+
+        // 3. Delete course description by course id
+        courseDescriptionService.removeById(courseId);
+
+        // 4. Delete course by course id
+        int rs = baseMapper.deleteById(courseId);
+        if(rs == 0){
+            throw new SvException(20001, "Fail to delete this course!");
+        }
     }
 }
