@@ -30,7 +30,7 @@ import java.util.List;
 @Api(tags = "teacher management")
 @RestController
 @RequestMapping("/eduservice/teacher")
-@CrossOrigin   //to fix CORS
+//@CrossOrigin   //to fix CORS
 public class EduTeacherController {
 
     @Autowired

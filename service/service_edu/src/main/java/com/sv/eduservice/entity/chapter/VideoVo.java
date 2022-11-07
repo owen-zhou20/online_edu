@@ -9,4 +9,6 @@ public class VideoVo {
 
     private String title;
 
+    // video id in Ali oss
+    private String videoSourceId;
 }

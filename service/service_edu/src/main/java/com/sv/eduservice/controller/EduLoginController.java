@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/eduservice/user")
-@CrossOrigin   //to fix CORS
+//@CrossOrigin   //to fix CORS
 public class EduLoginController {
 
 

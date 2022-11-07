@@ -24,7 +24,6 @@ public class OssController {
         //return url address for this avatar in Ali Oss
         String url = ossService.uploadFileAvatar(file);
 
-
         return R.ok().data("url",url);
     }
 

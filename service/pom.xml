@@ -13,12 +13,18 @@
     <packaging>pom</packaging>
 
 
-    <name>service Maven Webapp</name>
+    <name>service</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
     <modules>
         <module>service_edu</module>
         <module>service_oss</module>
+        <module>service_vod</module>
+        <module>service_cms</module>
+        <module>service_msm</module>
+        <module>service_ucenter</module>
+        <module>service_order</module>
+        <module>service_statistics</module>
     </modules>
 
     <properties>
@@ -34,26 +40,25 @@
             <artifactId>service_base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-        </dependency>-->
+        </dependency>
         <!--hystrix依赖，主要是用  @HystrixCommand -->
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-        </dependency>-->
-        <!--服务注册-->
-        <!--<dependency>
+        </dependency>
+        <!--Service Discovery-->
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>-->
-        <!--服务调用-->
-        <!--<dependency>
+        </dependency>
+        <!--Openfeign-->
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>-->
-
+        </dependency>
         <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>

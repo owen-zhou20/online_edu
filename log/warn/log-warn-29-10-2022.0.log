@@ -1,0 +1,2 @@
+19:07:14.390 29-10-2022 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+19:07:14.399 29-10-2022 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
