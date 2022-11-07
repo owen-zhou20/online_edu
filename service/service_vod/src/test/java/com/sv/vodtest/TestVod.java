@@ -13,8 +13,8 @@ import java.util.List;
 
 public class TestVod {
     public static void main(String[] args) throws Exception {
-        String accessKeyId = "LTAI5tSWv52rBd2MfrCdeuD8";
-        String accessKeySecret = "dXioGj9xYmaSy0JdKyxEn43NWL4c85";
+        String accessKeyId = "KeyId";
+        String accessKeySecret = "KeySecret";
         String title = "3 - What If I Want to Move Faster - upload by SDK";
         String fileName = "D:\\BaiduNetdiskDownload\\6 - What If I Want to Move Faster.mp4";
 
