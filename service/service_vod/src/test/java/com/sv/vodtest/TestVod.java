@@ -56,7 +56,7 @@ public class TestVod {
     public static void getPlayAuth() throws ClientException {
 
         // create init object
-        DefaultAcsClient client = InitObject.initVodClient("LTAI5tSWv52rBd2MfrCdeuD8", "dXioGj9xYmaSy0JdKyxEn43NWL4c85");
+        DefaultAcsClient client = InitObject.initVodClient("KeyId", "KeySecret");
 
         // create request and response
         GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
@@ -77,7 +77,7 @@ public class TestVod {
 
         // Query a playback URL
         // create init object
-        DefaultAcsClient client = InitObject.initVodClient("LTAI5tSWv52rBd2MfrCdeuD8","dXioGj9xYmaSy0JdKyxEn43NWL4c85");
+        DefaultAcsClient client = InitObject.initVodClient("KeyId","KeySecret");
 
         // create request and response
         GetPlayInfoRequest request = new GetPlayInfoRequest();
