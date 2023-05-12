@@ -18,6 +18,7 @@
     <modules>
         <module>service_base</module>
         <module>common_utils</module>
+        <module>spring_security</module>
     </modules>
 
     <properties>
@@ -38,7 +39,7 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <scope>provided </scope>
         </dependency>
-        <!--lombok用来简化实体类：需要安装lombok插件-->
+        <!--lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -60,7 +61,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <!-- spring2.X集成redis所需common-pool2-->
+        <!-- need common-pool2 to use in redis in spring2.X -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>

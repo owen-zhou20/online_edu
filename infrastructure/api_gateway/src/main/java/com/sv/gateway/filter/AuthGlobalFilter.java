@@ -63,7 +63,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         JsonObject message = new JsonObject();
         message.addProperty("success", false);
         message.addProperty("code", 28004);
-        message.addProperty("data", "鉴权失败");
+        message.addProperty("data", "Fail to auth");
         byte[] bits = message.toString().getBytes(StandardCharsets.UTF_8);
         DataBuffer buffer = response.bufferFactory().wrap(bits);
         //response.setStatusCode(HttpStatus.UNAUTHORIZED);

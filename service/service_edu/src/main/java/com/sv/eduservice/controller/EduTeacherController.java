@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * <p>
- * 讲师 前端控制器
+ * Teacher controller
  * </p>
  *
  * @author Owen
@@ -36,7 +36,7 @@ public class EduTeacherController {
     @Autowired
     private EduTeacherService teacherService;
 
-    //restful select all teachers
+    //1. select all teachers
     @ApiOperation(value = "List for all teachers")
     @GetMapping("findAll")
     public R findAllTeacher(){
@@ -113,8 +113,8 @@ public class EduTeacherController {
         return R.ok().data("total",total).data("rows",teacherList);
     }
 
-    //add teacher method
-    @ApiOperation(value = "add a new teacher")
+    //5. add a teacher
+    @ApiOperation(value = "add a teacher")
     @PostMapping("addTeacher")
     public R addTeacher(@RequestBody EduTeacher eduTeacher){
         boolean rs = teacherService.save(eduTeacher);
@@ -125,16 +125,20 @@ public class EduTeacherController {
         }
     }
 
-    //select a teacher's info by this teacher Id
-    @ApiOperation(value = "select a teacher's info by this teacher Id")
+    //6. select a teacher by teacher id
+    @ApiOperation(value = "select a teacher by teacher id")
     @GetMapping("getTeacher/{id}")
     public R getTeacher(@PathVariable String id){
         EduTeacher eduTeacher = teacherService.getById(id);
-        return R.ok().data("teacher",eduTeacher);
+        if(!StringUtils.isEmpty(eduTeacher.getName())) {
+            return R.ok().data("teacher", eduTeacher);
+        }else {
+            return R.error();
+        }
     }
 
-    //modify this teacher info
-    @ApiOperation(value = "modify this teacher info")
+    //7. modify a teacher
+    @ApiOperation(value = "modify a teacher")
     @PostMapping("updateTeacher")
     public R updateTeacher(@RequestBody EduTeacher eduTeacher){
         boolean rs = teacherService.updateById(eduTeacher);

@@ -3,15 +3,14 @@ package com.sv.commonutils;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
 import java.util.HashMap;
 import java.util.Map;
 
-// Return result class
+// Return common result
 @Data
 public class R {
 
-    @ApiModelProperty(value = "return success/false")
+    @ApiModelProperty(value = "return success/fail")
     private Boolean success;
 
     @ApiModelProperty(value = "return code")

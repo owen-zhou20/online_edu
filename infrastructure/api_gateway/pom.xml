@@ -24,7 +24,7 @@
     <dependencies>
         <dependency>
             <groupId>com.sv</groupId>
-            <artifactId>common_utils</artifactId>
+            <artifactId>service_base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

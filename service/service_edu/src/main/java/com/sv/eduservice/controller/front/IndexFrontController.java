@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/eduservice/indexfront")
 @Cacheable(key = "'selectCourseTeacherList'",value = "CourseTeacherList")
-@CrossOrigin
+//@CrossOrigin
 public class IndexFrontController {
 
     @Autowired

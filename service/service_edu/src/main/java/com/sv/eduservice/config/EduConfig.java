@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class EduConfig {
 
     /**
-     * 逻辑删除插件
+     * logical delete for MP
      */
     @Bean
     public ISqlInjector sqlInjector() {
@@ -21,7 +21,7 @@ public class EduConfig {
 
 
     /**
-     * 分页插件
+     * pagination interceptor for MP
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {

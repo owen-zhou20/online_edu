@@ -40,22 +40,23 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.util.pattern.PathPatternParser;
 
 /**
- * description:
+ * Cors
  *
- * @author wangpeng
- * @date 2019/01/02
+ * @author
+ * @date
  */
 @Configuration
 public class CorsConfig {
+    // Cors
     @Bean
     public CorsWebFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedMethod("*");
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
+        config.addAllowedMethod("*"); // allow any request
+        config.addAllowedOrigin("*"); // allow any origin
+        config.addAllowedHeader("*"); // allow any request header
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("/**", config); // allow any request
 
         return new CorsWebFilter(source);
     }
