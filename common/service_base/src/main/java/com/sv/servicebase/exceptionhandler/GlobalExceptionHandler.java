@@ -8,27 +8,32 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ *  Exception Handler
+ */
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
-    //will handler all exceptions
+    // handler for all exceptions
     @ExceptionHandler(Exception.class)
     @ResponseBody //to return R
     public R error(Exception e){
+        log.error(ExceptionUtil.getMessage(e));
         e.printStackTrace();
         return R.error().message("execute all exception handler");
     }
 
-    //will handler ArithmeticException
+    // handler for ArithmeticException error
     @ExceptionHandler(ArithmeticException.class)
     @ResponseBody //to return R
     public R error(ArithmeticException e){
+        log.error(ExceptionUtil.getMessage(e));
         e.printStackTrace();
         return R.error().message("execute ArithmeticException handler");
     }
 
-    //will handler SvException
+    // handle for SvException error
     @ExceptionHandler(SvException.class)
     @ResponseBody //to return R
     public R error(SvException e){

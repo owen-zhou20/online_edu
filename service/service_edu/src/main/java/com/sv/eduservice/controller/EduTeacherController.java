@@ -39,8 +39,9 @@ public class EduTeacherController {
     //1. select all teachers
     @ApiOperation(value = "List for all teachers")
     @GetMapping("findAll")
+    //@PreAuthorize("hasAuthority('teacher.list')")
     public R findAllTeacher(){
-        //call service methods to find
+        // call MP
         List<EduTeacher> teachers = teacherService.list(null);
         return R.ok().data("teacherList",teachers);
     }
@@ -48,6 +49,7 @@ public class EduTeacherController {
     //2. Logic delete a teacher
     @ApiOperation(value = "Logic delete a teacher")
     @DeleteMapping("{id}")
+    //@PreAuthorize("hasAuthority('teacher.remove')")
     public R removeTeacher(
             @ApiParam(name = "id", value = "teacher ID", required = true)
             @PathVariable String id){
@@ -62,6 +64,7 @@ public class EduTeacherController {
     //3. pagination select teacher list
     @ApiOperation("Pagination select teachers")
     @GetMapping("pageTeacher/{current}/{limit}")
+    //@PreAuthorize("hasAuthority('teacher.list')")
     public R pageListTeacher(@PathVariable long current,
                              @PathVariable long limit) {
         Page<EduTeacher> pageTeacher =  new Page<>(current,limit);
@@ -75,6 +78,7 @@ public class EduTeacherController {
     //4. pagination condition select teacher list
     @ApiOperation("multiple condition select teachers with pagination")
     @PostMapping("pageTeacherCondition/{current}/{limit}")
+    //@PreAuthorize("hasAuthority('teacher.list')")
     public R pageTeacherCondition(@PathVariable long current,
                                   @PathVariable long limit,
                                   @RequestBody(required = false) TeacherQuery teacherQuery){
@@ -116,6 +120,7 @@ public class EduTeacherController {
     //5. add a teacher
     @ApiOperation(value = "add a teacher")
     @PostMapping("addTeacher")
+    //@PreAuthorize("hasAuthority('teacher.add')")
     public R addTeacher(@RequestBody EduTeacher eduTeacher){
         boolean rs = teacherService.save(eduTeacher);
         if(rs){
@@ -128,6 +133,7 @@ public class EduTeacherController {
     //6. select a teacher by teacher id
     @ApiOperation(value = "select a teacher by teacher id")
     @GetMapping("getTeacher/{id}")
+    //@PreAuthorize("hasAuthority('teacher.list')")
     public R getTeacher(@PathVariable String id){
         EduTeacher eduTeacher = teacherService.getById(id);
         if(!StringUtils.isEmpty(eduTeacher.getName())) {
@@ -140,6 +146,7 @@ public class EduTeacherController {
     //7. modify a teacher
     @ApiOperation(value = "modify a teacher")
     @PostMapping("updateTeacher")
+    //@PreAuthorize("hasAuthority('teacher.update')")
     public R updateTeacher(@RequestBody EduTeacher eduTeacher){
         boolean rs = teacherService.updateById(eduTeacher);
         if(rs){

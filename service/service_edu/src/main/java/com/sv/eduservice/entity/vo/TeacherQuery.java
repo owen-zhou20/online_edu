@@ -13,7 +13,7 @@ public class TeacherQuery {
     @ApiModelProperty(value = "teacher name")
     private String name;
 
-    @ApiModelProperty(value = "teacher level  1:Teacher, 2:Head Teacher")
+    @ApiModelProperty(value = "teacher level  1:Normal Teacher, 2:Head Teacher")
     private Integer level;
 
     @ApiModelProperty(value = "create time", example = "10:10:10 01-01-2019")
