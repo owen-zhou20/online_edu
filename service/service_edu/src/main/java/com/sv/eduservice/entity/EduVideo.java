@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 课程视频
+ * Course video entity
  * </p>
  *
  * @author Owen
@@ -24,56 +24,56 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="EduVideo对象", description="课程视频")
+@ApiModel(value="EduVideo entity", description="Course video entity")
 public class EduVideo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "视频ID")
+    @ApiModelProperty(value = "Course video ID")
     @TableId(value = "id", type = IdType.ID_WORKER_STR)
     private String id;
 
-    @ApiModelProperty(value = "课程ID")
+    @ApiModelProperty(value = "Course ID")
     private String courseId;
 
-    @ApiModelProperty(value = "章节ID")
+    @ApiModelProperty(value = "Chapter ID")
     private String chapterId;
 
-    @ApiModelProperty(value = "节点名称")
+    @ApiModelProperty(value = "Video title")
     private String title;
 
-    @ApiModelProperty(value = "云端视频资源")
+    @ApiModelProperty(value = "Video source Id in Vod Cloud")
     private String videoSourceId;
 
-    @ApiModelProperty(value = "原始文件名称")
+    @ApiModelProperty(value = "Video original name in Vod Cloud")
     private String videoOriginalName;
 
-    @ApiModelProperty(value = "排序字段")
+    @ApiModelProperty(value = "Sort")
     private Integer sort;
 
-    @ApiModelProperty(value = "播放次数")
+    @ApiModelProperty(value = "Play count")
     private Long playCount;
 
-    @ApiModelProperty(value = "是否可以试听：0收费 1免费")
+    @ApiModelProperty(value = "Course is free: 0 Not free, 1 Free")
     private Integer isFree;
 
-    @ApiModelProperty(value = "视频时长（秒）")
+    @ApiModelProperty(value = "Video duration(second)")
     private Float duration;
 
-    @ApiModelProperty(value = "Empty未上传 Transcoding转码中  Normal正常")
+    @ApiModelProperty(value = "Status: Empty: not upload, Transcoding: transcoding,  Normal: normal")
     private String status;
 
-    @ApiModelProperty(value = "视频源文件大小（字节）")
+    @ApiModelProperty(value = "Video file size(Byte)")
     private Long size;
 
-    @ApiModelProperty(value = "乐观锁")
+    @ApiModelProperty(value = "Version in optimistic locking")
     private Long version;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "Create time")
     @TableField(fill = FieldFill.INSERT)
     private Date gmtCreate;
 
-    @ApiModelProperty(value = "更新时间")
+    @ApiModelProperty(value = "Update time")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 

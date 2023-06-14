@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * <p>
- * 课程视频 服务实现类
+ * course video serviceImpl
  * </p>
  *
  * @author Owen

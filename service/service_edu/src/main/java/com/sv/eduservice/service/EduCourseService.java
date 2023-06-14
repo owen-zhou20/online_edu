@@ -26,7 +26,7 @@ public interface EduCourseService extends IService<EduCourse> {
     // Get course info by course id
     CourseInfoVo getCourseInfo(String courseId);
 
-    // Modify course info
+    // Update course info by courseId
     void updataCourseInfo(CourseInfoVo courseInfoVo);
 
     // Get course info by course id

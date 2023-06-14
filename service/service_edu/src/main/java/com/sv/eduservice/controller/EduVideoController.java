@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
- * 课程视频 前端控制器
+ * course video controller
  * </p>
  *
  * @author Owen

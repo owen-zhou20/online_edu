@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 首页banner表
+ * Homepage banner entity
  * </p>
  *
  * @author Owen
@@ -21,34 +21,34 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="CrmBanner对象", description="首页banner表")
+@ApiModel(value="CrmBanner entity", description="Homepage banner entity")
 public class CrmBanner implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(value = "Banner ID")
     @TableId(value = "id", type = IdType.ID_WORKER_STR)
     private String id;
 
-    @ApiModelProperty(value = "标题")
+    @ApiModelProperty(value = "Banner title")
     private String title;
 
-    @ApiModelProperty(value = "图片地址")
+    @ApiModelProperty(value = "Banner image url")
     private String imageUrl;
 
-    @ApiModelProperty(value = "链接地址")
+    @ApiModelProperty(value = "Banner link url")
     private String linkUrl;
 
-    @ApiModelProperty(value = "排序")
+    @ApiModelProperty(value = "Sort")
     private Integer sort;
 
-    @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
+    @ApiModelProperty(value = "Logic delete. 1（true）deleted， 0（false）not deleted")
     private Integer isDeleted;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "Create time")
     private Date gmtCreate;
 
-    @ApiModelProperty(value = "更新时间")
+    @ApiModelProperty(value = "Update time")
     private Date gmtModified;
 
 

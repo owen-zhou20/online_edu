@@ -12,7 +12,7 @@ public class CourseQuery {
     @ApiModelProperty(value = "Course publish status")
     private String status;
 
-    @ApiModelProperty(value = "查询开始时间", example = "2019-01-01 10:10:10")
-    private String gmt_create;//注意，这里使用的是String类型，前端传过来的数据无需进行类型转换
+    @ApiModelProperty(value = "Select create time", example = "2019-01-01 10:10:10")
+    private String gmt_create;//String
 
 }

@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * EduTeacher entity
+ * Teacher entity
  * </p>
  *
  * @author Owen

@@ -5,12 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sv.commonutils.R;
 import com.sv.eduservice.entity.EduCourse;
-import com.sv.eduservice.entity.EduTeacher;
 import com.sv.eduservice.entity.vo.CourseInfoVo;
 import com.sv.eduservice.entity.vo.CoursePublishVo;
 import com.sv.eduservice.entity.vo.CourseQuery;
-import com.sv.eduservice.entity.vo.TeacherQuery;
 import com.sv.eduservice.service.EduCourseService;
+import com.sv.eduservice.utils.ConstantCourseUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -34,7 +33,8 @@ public class EduCourseController {
     @Autowired
     private EduCourseService courseService;
 
-    // Course list TODO
+    // Course list
+    // TODO wrapper
     @GetMapping("courseList")
     public R getCourseList(){
         List<EduCourse> courseList = courseService.list(null);
@@ -77,8 +77,12 @@ public class EduCourseController {
     // Add course
     @PostMapping("addCourseInfo")
     public R addCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
-        String id = courseService.saveCourseInfo(courseInfoVo);
-        return R.ok().data("courseId", id);
+            String courseId = courseService.saveCourseInfo(courseInfoVo);
+        if(!StringUtils.isEmpty(courseId)) {
+            return R.ok().data("courseId", courseId);
+        }else{
+            return R.error();
+        }
     }
 
     // Get course info by course id
@@ -88,8 +92,8 @@ public class EduCourseController {
         return R.ok().data("courseInfoVo", courseInfoVo);
     }
 
-    // Modify course info
-    @PostMapping("updateCourseInfo")
+    // Modify course info by courseId
+    @PutMapping("updateCourseInfo")
     public R updateCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
         courseService.updataCourseInfo(courseInfoVo);
         return R.ok();
@@ -107,7 +111,7 @@ public class EduCourseController {
     public R publishCourse(@PathVariable String id){
         EduCourse eduCourse = new EduCourse();
         eduCourse.setId(id);
-        eduCourse.setStatus("Normal"); // Set course status as publish
+        eduCourse.setStatus(ConstantCourseUtils.COURSE_NORMAL); // Set course status as publish
         boolean rs = courseService.updateById(eduCourse);
         if(rs == true) {
             return R.ok();
@@ -121,7 +125,7 @@ public class EduCourseController {
     public R draftCourse(@PathVariable String id){
         EduCourse eduCourse = new EduCourse();
         eduCourse.setId(id);
-        eduCourse.setStatus("Draft"); // Set course status as draft
+        eduCourse.setStatus(ConstantCourseUtils.COURSE_DRAFT); // Set course status as draft
         boolean rs = courseService.updateById(eduCourse);
         if(rs == true) {
             return R.ok();

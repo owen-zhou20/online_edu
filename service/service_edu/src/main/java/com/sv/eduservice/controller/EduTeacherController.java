@@ -37,7 +37,7 @@ public class EduTeacherController {
     private EduTeacherService teacherService;
 
     //1. select all teachers
-    @ApiOperation(value = "List for all teachers")
+    @ApiOperation(value = "Get teacher list for all teachers")
     @GetMapping("findAll")
     //@PreAuthorize("hasAuthority('teacher.list')")
     public R findAllTeacher(){
@@ -57,7 +57,7 @@ public class EduTeacherController {
         if(flag){
             return R.ok();
         }else {
-            return R.error();
+            return R.error().message("Delete fail!");
         }
     }
 
@@ -126,7 +126,7 @@ public class EduTeacherController {
         if(rs){
             return R.ok();
         }else {
-            return R.error();
+            return R.error().message("Add fail!");
         }
     }
 
@@ -139,20 +139,20 @@ public class EduTeacherController {
         if(!StringUtils.isEmpty(eduTeacher.getName())) {
             return R.ok().data("teacher", eduTeacher);
         }else {
-            return R.error();
+            return R.error().message("Select fail!");
         }
     }
 
     //7. modify a teacher
     @ApiOperation(value = "modify a teacher")
-    @PostMapping("updateTeacher")
+    @PutMapping("updateTeacher")
     //@PreAuthorize("hasAuthority('teacher.update')")
     public R updateTeacher(@RequestBody EduTeacher eduTeacher){
         boolean rs = teacherService.updateById(eduTeacher);
         if(rs){
             return R.ok();
         }else{
-            return R.error();
+            return R.error().message("Update fail!");
         }
     }
 

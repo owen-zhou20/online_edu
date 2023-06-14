@@ -12,6 +12,7 @@ public class ChapterVo {
 
     private String title;
 
+    // Video vo list in chapter vo
     private List<VideoVo> children = new ArrayList<>();
 
 }

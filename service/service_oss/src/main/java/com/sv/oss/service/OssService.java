@@ -4,8 +4,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface OssService {
 
-
-    String uploadFileAvatar(MultipartFile file);
+    //upload teacher avatar to Ali Oss
+    String uploadFile(MultipartFile file);
 
 
 }

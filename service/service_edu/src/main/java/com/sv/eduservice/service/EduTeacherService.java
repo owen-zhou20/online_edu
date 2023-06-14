@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 讲师 服务类
+ * Teacher Service
  * </p>
  *
  * @author Owen

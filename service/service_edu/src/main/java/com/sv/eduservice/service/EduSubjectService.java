@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * <p>
- * 课程科目 服务类
+ * course subject controller
  * </p>
  *
  * @author Owen
@@ -17,8 +17,10 @@ import java.util.List;
  */
 public interface EduSubjectService extends IService<EduSubject> {
 
+    // add course subject
+    // get the upload excel file and read this excel file
     void saveSubject(MultipartFile file, EduSubjectService subjectService);
 
-    // course subject list tree
+    //course subject list(tree data)
     List<OneSubject> getAllOneTwoSubject();
 }

@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * <p>
- * 课程科目 服务实现类
+ * course subject
  * </p>
  *
  * @author Owen
@@ -30,7 +30,9 @@ import java.util.List;
 @Service
 public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubject> implements EduSubjectService {
 
-    //add course subject
+    // add course subject
+    // get the upload excel file and read this excel file
+    // use SubjectExcelListener to read excel one line by one line
     @Override
     public void saveSubject(MultipartFile file, EduSubjectService subjectService) {
         try{
@@ -38,7 +40,6 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             InputStream in = file.getInputStream();
             //use EasyExcel to read file from input steam
             EasyExcel.read(in, SubjectData.class, new SubjectExcelListener(subjectService)).sheet().doRead();
-
         }catch(Exception e){
             e.printStackTrace();
             throw new SvException(20001,"file to upload subject");
@@ -46,7 +47,7 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
 
     }
 
-    // course subject list tree
+    //course subject list(tree data)
     @Override
     public List<OneSubject> getAllOneTwoSubject() {
         // Get all one subjects, parent_id = 0
@@ -71,8 +72,7 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             oneSubject.setTitle(eduSubject.getTitle());*/
             BeanUtils.copyProperties(eduSubject, oneSubject);
 
-
-            // put level two subjects in the children in each level one subject
+            // put two subjects in the children in each one subject
             List<TwoSubject> twoFinalSubjectList = new ArrayList<>();
             //Put two subjects into twoFinalSubjectList for each one subject
             for (int m = 0; m < twoSubjectList.size(); m++) {
@@ -89,8 +89,6 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             // Put oneSubject into FinalSubjectList
             finalSubjectList.add(oneSubject);
         }
-
-
         return finalSubjectList;
     }
 }

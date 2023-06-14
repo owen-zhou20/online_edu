@@ -3,6 +3,11 @@ package com.sv.eduservice.controller;
 import com.sv.commonutils.R;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * temporary login Api
+ *
+ */
+
 @RestController
 @RequestMapping("/eduservice/user")
 //@CrossOrigin   //to fix CORS

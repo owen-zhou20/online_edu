@@ -3,6 +3,7 @@ package com.sv.oss.service.impl;
 import com.sv.oss.service.OssService;
 import com.sv.oss.utils.ConstantPropertiesUtils;
 import com.sv.servicebase.exceptionhandler.SvException;
+import org.apache.logging.log4j.util.Strings;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,9 @@ public class OssServiceImpl implements OssService {
 
     //Upload teacher avatar to Ali Oss
     @Override
-    public String uploadFileAvatar(MultipartFile file) {
+    public String uploadFile(MultipartFile file) {
+        // file url in Ali OSS for return
+        String url = null;
         // In this example, the endpoint of the China (Hangzhou) region is used. Specify the actual endpoint.
         String endpoint = ConstantPropertiesUtils.END_POINT;
         // The AccessKey pair of an Alibaba Cloud account has permissions on all API operations. Using these credentials to perform operations in OSS is a high-risk operation. We recommend that you use a RAM user to call API operations or perform routine O&M. To create a RAM user, log on to the RAM console.
@@ -52,8 +55,8 @@ public class OssServiceImpl implements OssService {
 
             // Create a PutObject request.
             ossClient.putObject(bucketName, fileName, inputStream);
-            String url = "https://"+bucketName+"."+endpoint+"/"+fileName;
-            return url;
+            url = "https://"+bucketName+"."+endpoint+"/"+fileName;
+            //return url;
         } catch (OSSException oe) {
             System.out.println("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
@@ -61,20 +64,21 @@ public class OssServiceImpl implements OssService {
             System.out.println("Error Code:" + oe.getErrorCode());
             System.out.println("Request ID:" + oe.getRequestId());
             System.out.println("Host ID:" + oe.getHostId());
-            return null;
+            throw new SvException(20001,"Failed to upload avatar to Ali OSS. "+oe);
         } catch (ClientException ce) {
             System.out.println("Caught an ClientException, which means the client encountered "
                     + "a serious internal problem while trying to communicate with OSS, "
                     + "such as not being able to access the network.");
             System.out.println("Error Message:" + ce.getMessage());
-            return null;
+            throw new SvException(20001,"Failed to upload avatar to Ali OSS. "+ce);
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            throw new SvException(20001,"Failed to upload avatar to Ali OSS. "+e);
         } finally {
             if (ossClient != null) {
                 ossClient.shutdown();
             }
+            return url;
         }
     }
 }

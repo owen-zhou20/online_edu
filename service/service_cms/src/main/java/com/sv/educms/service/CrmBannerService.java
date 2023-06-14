@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * <p>
- * 首页banner表 服务类
+ * Homepage banner service
  * </p>
  *
  * @author Owen

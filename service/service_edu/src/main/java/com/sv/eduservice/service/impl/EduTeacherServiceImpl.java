@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * <p>
- * Teacher service
+ * Teacher ServiceImpl
  * </p>
  *
  * @author Owen

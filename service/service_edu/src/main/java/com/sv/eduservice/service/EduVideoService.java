@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 课程视频 服务类
+ * course video service
  * </p>
  *
  * @author Owen

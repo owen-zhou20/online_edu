@@ -9,6 +9,6 @@ public class VideoVo {
 
     private String title;
 
-    // video id in Ali oss
+    // video id in Ali vod
     private String videoSourceId;
 }

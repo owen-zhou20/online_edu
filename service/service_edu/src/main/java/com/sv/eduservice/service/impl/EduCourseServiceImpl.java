@@ -14,6 +14,7 @@ import com.sv.eduservice.service.EduCourseDescriptionService;
 import com.sv.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sv.eduservice.service.EduVideoService;
+import com.sv.eduservice.utils.ConstantCourseUtils;
 import com.sv.servicebase.exceptionhandler.SvException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 课程 服务实现类
+ * course service
  * </p>
  *
  * @author Owen
@@ -56,6 +57,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         //System.out.println("SubjectParentId ===>"+ courseInfoVo.getSubjectParentId());
         EduCourse eduCourse = new EduCourse();
         BeanUtils.copyProperties(courseInfoVo, eduCourse);
+        eduCourse.setStatus(ConstantCourseUtils.COURSE_DRAFT); // Set course status as draft
         int insert = baseMapper.insert(eduCourse);
         if(insert == 0){
             // add failed
@@ -80,34 +82,41 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     public CourseInfoVo getCourseInfo(String courseId) {
         // 1. Select edu_course table from DB
         EduCourse eduCourse = baseMapper.selectById(courseId);
+        if(eduCourse == null){
+            throw new SvException(20001,"This course is not exist!");
+        }
         CourseInfoVo courseInfoVo = new CourseInfoVo();
         BeanUtils.copyProperties(eduCourse, courseInfoVo);
 
         // 2. Select edu_course_description table from DB
         EduCourseDescription courseDescription = courseDescriptionService.getById(courseId);
         //BeanUtils.copyProperties(courseDescription, courseInfoVo);
-        courseInfoVo.setDescription(courseDescription.getDescription());
-
+        if(courseDescription != null){
+            courseInfoVo.setDescription(courseDescription.getDescription());
+        }
         return courseInfoVo;
     }
 
-    // Modify course info
+    // Update course info by courseId
     @Override
     @Transactional
     public void updataCourseInfo(CourseInfoVo courseInfoVo) {
-        // 1. Modify edu_course table from DB
+        // 1. Update edu_course table from DB
         EduCourse eduCourse = new EduCourse();
         BeanUtils.copyProperties(courseInfoVo, eduCourse);
         int rs = baseMapper.updateById(eduCourse);
         if(rs == 0){
-            throw new SvException(20001, "fail to modify course info!");
+            throw new SvException(20001, "Fail to modify course info!");
         }
 
-        // 2. Modify edu_course_description table from DB
+        // 2. Update edu_course_description table from DB
         EduCourseDescription courseDescription = new EduCourseDescription();
         courseDescription.setId(courseInfoVo.getId());
         courseDescription.setDescription(courseInfoVo.getDescription());
-        courseDescriptionService.updateById(courseDescription);
+        boolean rsDesc = courseDescriptionService.updateById(courseDescription);
+        if(rsDesc == false){
+            throw new SvException(20001, "Fail to modify course description!");
+        }
 
     }
 
@@ -121,6 +130,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     // Delete course
     @Override
+    @Transactional
     public void removeCourse(String courseId) {
         // 1. Delete videos by course id
         videoService.removeVideoByCourseId(courseId);

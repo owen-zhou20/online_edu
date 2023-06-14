@@ -8,6 +8,8 @@ import com.sv.eduservice.entity.excel.SubjectData;
 import com.sv.eduservice.service.EduSubjectService;
 import com.sv.servicebase.exceptionhandler.SvException;
 
+// add course subject
+// get the upload excel file and read this excel file
 public class SubjectExcelListener extends AnalysisEventListener<SubjectData> {
 
     public EduSubjectService subjectService;
@@ -21,7 +23,6 @@ public class SubjectExcelListener extends AnalysisEventListener<SubjectData> {
     public void invoke(SubjectData subjectData, AnalysisContext analysisContext) {
         if(subjectData == null){
             throw new SvException(20001,"file data is empty");
-
         }
         //to check one level subject is not existed, add this one level subject
         EduSubject existOneSubject = this.existOneSubject(subjectService, subjectData.getOneSubjectName());
@@ -58,7 +59,6 @@ public class SubjectExcelListener extends AnalysisEventListener<SubjectData> {
         wrapper.eq("parent_id",pid);
         EduSubject twoSubject = subjectService.getOne(wrapper);
         return twoSubject;
-
     }
 
     @Override

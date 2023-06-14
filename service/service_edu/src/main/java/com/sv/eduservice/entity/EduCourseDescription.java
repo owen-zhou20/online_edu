@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 课程简介
+ * Course description entity
  * </p>
  *
  * @author Owen
@@ -24,23 +24,23 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="EduCourseDescription对象", description="课程简介")
+@ApiModel(value="EduCourseDescription entity", description="Course description")
 public class EduCourseDescription implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "课程ID")
+    @ApiModelProperty(value = "Course ID")
     @TableId(value = "id", type = IdType.INPUT)
     private String id;
 
-    @ApiModelProperty(value = "课程简介")
+    @ApiModelProperty(value = "Course description")
     private String description;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "Create time")
     @TableField(fill = FieldFill.INSERT)
     private Date gmtCreate;
 
-    @ApiModelProperty(value = "更新时间")
+    @ApiModelProperty(value = "Update time")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 
