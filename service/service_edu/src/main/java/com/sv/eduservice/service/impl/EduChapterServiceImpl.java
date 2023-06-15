@@ -31,17 +31,19 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     @Autowired
     private EduVideoService videoService;
 
-    // Get all course chapters list include all videos list by course id
+    // Get all course chapters list include nested videos list by course id
     @Override
     public List<ChapterVo> getChapterVideoByCourseId(String courseId) {
         // 1. Get all course chapters list by course id
         QueryWrapper<EduChapter> wrapperChapter = new QueryWrapper<>();
         wrapperChapter.eq("course_id",courseId);
+        wrapperChapter.orderByAsc("sort","id");
         List<EduChapter> eduChapterList = baseMapper.selectList(wrapperChapter);
 
         // 2. Get all course videos list by course id
         QueryWrapper<EduVideo> wrapperVideo = new QueryWrapper<>();
         wrapperVideo.eq("course_id",courseId);
+        wrapperVideo.orderByAsc("sort","id");
         List<EduVideo> eduVideoList = videoService.list(wrapperVideo);
 
         // Final list

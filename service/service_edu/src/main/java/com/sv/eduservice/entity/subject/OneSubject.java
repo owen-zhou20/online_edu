@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-// Level one subject
+// Level one subject vo
 @Data
 public class OneSubject {
 

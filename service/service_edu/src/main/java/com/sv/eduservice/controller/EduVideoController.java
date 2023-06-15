@@ -33,11 +33,14 @@ public class EduVideoController {
     // Add video
     @PostMapping("addVideo")
     public R addVideo(@RequestBody EduVideo eduVideo){
-        videoService.save(eduVideo);
+        boolean rs = videoService.save(eduVideo);
+        if(!rs){
+            throw new SvException(20001,"Fail to add this video");
+        }
         return R.ok();
     }
 
-    // Delete video also delete video from Ali VOD
+    // Delete video also delete video from Ali VOD  TODO serviceImpl
     @DeleteMapping("{id}")
     public R deleteVideo(@PathVariable String id){
         // Get Vod video source id by video id
@@ -58,9 +61,12 @@ public class EduVideoController {
     }
 
     // Modify video TODO
-    @PostMapping("updateVideo")
+    @PutMapping("updateVideo")
     public R updateVideo(@RequestBody EduVideo eduVideo){
-        videoService.updateById(eduVideo);
+        boolean rs = videoService.updateById(eduVideo);
+        if(!rs){
+            throw new SvException(20001,"Fail to modify this video");
+        }
         return R.ok();
     }
 
@@ -68,6 +74,9 @@ public class EduVideoController {
     @GetMapping("getVideoInfo/{videoId}")
     public R getVideoInfo(@PathVariable String videoId){
         EduVideo eduVideo = videoService.getById(videoId);
+        if(eduVideo == null){
+            throw new SvException(20001,"This video is not exist!");
+        }
         return R.ok().data("video",eduVideo);
     }
 

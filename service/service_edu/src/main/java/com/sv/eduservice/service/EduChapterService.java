@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface EduChapterService extends IService<EduChapter> {
 
-    // Get all course chapters list include all videos list by course id
+    // Get all course chapters list include nested videos list by course id
     List<ChapterVo> getChapterVideoByCourseId(String courseId);
 
     // Delect chapter by id

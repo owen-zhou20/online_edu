@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * <p>
- * 课程 前端控制器
+ * Course chapter controller
  * </p>
  *
  * @author Owen
@@ -26,7 +26,7 @@ public class EduChapterController {
     @Autowired
     private EduChapterService chapterService;
 
-    // Get all course chapters list include all videos list by course id
+    // Get all course chapters list include nested videos list by course id
     @GetMapping("getChapterVideo/{courseId}")
     public R getChapterVideo(@PathVariable String courseId){
         List<ChapterVo> list = chapterService.getChapterVideoByCourseId(courseId);
@@ -48,7 +48,7 @@ public class EduChapterController {
     }
 
     // Modify chapter info
-    @PostMapping("updateChapter")
+    @PutMapping("updateChapter")
     public R updateChapter(@RequestBody EduChapter eduChapter){
         chapterService.updateById(eduChapter);
         return R.ok();
