@@ -49,26 +49,8 @@ public class EduCourseController {
                             @RequestBody(required = false) CourseQuery courseQuery) {
         Page<EduCourse> pageCourse =  new Page<>(current,limit);
 
-        String title = courseQuery.getTitle();
-        String status = courseQuery.getStatus();
-        String gmt_create = courseQuery.getGmt_create();
+        pageCourse = courseService.pageListCourse(pageCourse, courseQuery);
 
-        QueryWrapper wrapper = new QueryWrapper();
-
-        if(!StringUtils.isEmpty(title)){
-            wrapper.like("title",title);
-        }
-        if(!StringUtils.isEmpty(status)){
-            wrapper.eq("status",status);
-        }
-        if(!StringUtils.isEmpty(gmt_create)){
-            wrapper.ge("gmt_create",gmt_create);
-        }
-
-        //sort by create time
-        wrapper.orderByDesc("gmt_create");
-
-        courseService.page(pageCourse, wrapper);
         long total = pageCourse.getTotal();
         List<EduCourse> courseList = pageCourse.getRecords();
         return R.ok().data("total",total).data("rows",courseList);
@@ -99,7 +81,7 @@ public class EduCourseController {
         return R.ok();
     }
 
-    // Get course info by course id
+    // Get publish course info by course id
     @GetMapping("getPublishCourseInfo/{id}")
     public R getPublishCourseInfo(@PathVariable String id){
         CoursePublishVo publishCourse = courseService.publishCourseInfo(id);
@@ -107,12 +89,9 @@ public class EduCourseController {
     }
 
     // Modify course status as publish
-    @PostMapping("publishCourse/{id}")
+    @PutMapping("publishCourse/{id}")
     public R publishCourse(@PathVariable String id){
-        EduCourse eduCourse = new EduCourse();
-        eduCourse.setId(id);
-        eduCourse.setStatus(ConstantCourseUtils.COURSE_NORMAL); // Set course status as publish
-        boolean rs = courseService.updateById(eduCourse);
+        boolean rs = courseService.publishCourse(id,true);// Set course status as publish
         if(rs == true) {
             return R.ok();
         }else {
@@ -121,12 +100,9 @@ public class EduCourseController {
     }
 
     // Modify course status as draft
-    @PostMapping("draftCourse/{id}")
+    @PutMapping("draftCourse/{id}")
     public R draftCourse(@PathVariable String id){
-        EduCourse eduCourse = new EduCourse();
-        eduCourse.setId(id);
-        eduCourse.setStatus(ConstantCourseUtils.COURSE_DRAFT); // Set course status as draft
-        boolean rs = courseService.updateById(eduCourse);
+        boolean rs = courseService.publishCourse(id,false);// Set course status as draft
         if(rs == true) {
             return R.ok();
         }else {
@@ -139,7 +115,6 @@ public class EduCourseController {
     public R deleteCourse(@PathVariable String courseId){
         courseService.removeCourse(courseId);
         return R.ok();
-
     }
 
 }

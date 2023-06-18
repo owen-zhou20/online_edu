@@ -7,12 +7,13 @@ import com.sv.eduservice.entity.frontvo.CourseFrontVo;
 import com.sv.eduservice.entity.frontvo.CourseWebVo;
 import com.sv.eduservice.entity.vo.CourseInfoVo;
 import com.sv.eduservice.entity.vo.CoursePublishVo;
+import com.sv.eduservice.entity.vo.CourseQuery;
 
 import java.util.Map;
 
 /**
  * <p>
- * 课程 服务类
+ * Course service
  * </p>
  *
  * @author Owen
@@ -40,4 +41,10 @@ public interface EduCourseService extends IService<EduCourse> {
 
     // Get course info by id
     CourseWebVo getBaseCourseInfo(String courseId);
+
+    // Change publish course status. publish: flag==true, draft: flag==false
+    boolean publishCourse(String id, boolean publish);
+
+    // Pagination condition select course list
+    Page<EduCourse> pageListCourse(Page<EduCourse> pageCourse, CourseQuery courseQuery);
 }

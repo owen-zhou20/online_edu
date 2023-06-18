@@ -15,7 +15,7 @@ import com.sv.eduservice.entity.vo.CoursePublishVo;
  */
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
 
-    public CoursePublishVo getPublishCourseInfo(String courseId);
+    CoursePublishVo getPublishCourseInfo(String courseId);
 
     // Get course info by id
     CourseWebVo getBaseCourseInfo(String courseId);

@@ -1,6 +1,7 @@
 package com.sv.eduservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sv.eduservice.entity.EduCourse;
 import com.sv.eduservice.entity.EduCourseDescription;
@@ -8,6 +9,7 @@ import com.sv.eduservice.entity.frontvo.CourseFrontVo;
 import com.sv.eduservice.entity.frontvo.CourseWebVo;
 import com.sv.eduservice.entity.vo.CourseInfoVo;
 import com.sv.eduservice.entity.vo.CoursePublishVo;
+import com.sv.eduservice.entity.vo.CourseQuery;
 import com.sv.eduservice.mapper.EduCourseMapper;
 import com.sv.eduservice.service.EduChapterService;
 import com.sv.eduservice.service.EduCourseDescriptionService;
@@ -28,7 +30,7 @@ import java.util.Map;
 
 /**
  * <p>
- * course service
+ * course serviceImpl
  * </p>
  *
  * @author Owen
@@ -213,5 +215,50 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     @Override
     public CourseWebVo getBaseCourseInfo(String courseId) {
         return baseMapper.getBaseCourseInfo(courseId);
+    }
+
+    // Change publish course status
+    @Override
+    public boolean publishCourse(String id, boolean publish) {
+        EduCourse eduCourse = new EduCourse();
+        eduCourse.setId(id);
+        if(publish == true){
+            eduCourse.setStatus(ConstantCourseUtils.COURSE_NORMAL); // Set course status as publish
+        } else {
+            eduCourse.setStatus(ConstantCourseUtils.COURSE_DRAFT); // Set course status as draft
+        }
+        int rs = baseMapper.updateById(eduCourse);
+        if(rs>0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    // Pagination condition select course list
+    @Override
+    public Page<EduCourse> pageListCourse(Page<EduCourse> pageCourse, CourseQuery courseQuery) {
+
+        String title = courseQuery.getTitle();
+        String status = courseQuery.getStatus();
+        String gmt_create = courseQuery.getGmt_create();
+
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper();
+
+        if(!StringUtils.isEmpty(title)){
+            wrapper.like("title",title);
+        }
+        if(!StringUtils.isEmpty(status)){
+            wrapper.eq("status",status);
+        }
+        if(!StringUtils.isEmpty(gmt_create)){
+            wrapper.ge("gmt_create",gmt_create);
+        }
+
+        //sort by create time
+        wrapper.orderByDesc("gmt_create");
+
+        baseMapper.selectPage(pageCourse, wrapper);
+        return pageCourse;
     }
 }
