@@ -133,7 +133,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     // Delete course
     @Override
     @Transactional
-    public void removeCourse(String courseId) {
+    public boolean removeCourse(String courseId) {
         // 1. Delete videos by course id
         videoService.removeVideoByCourseId(courseId);
 
@@ -148,6 +148,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         if(rs == 0){
             throw new SvException(20001, "Fail to delete this course!");
         }
+        return rs > 0 ;
     }
 
     // 1. pagination select course list front
@@ -240,7 +241,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     public Page<EduCourse> pageListCourse(Page<EduCourse> pageCourse, CourseQuery courseQuery) {
 
         String title = courseQuery.getTitle();
+        String teacherId = courseQuery.getTeacherId();
         String status = courseQuery.getStatus();
+        String subjectParentId = courseQuery.getSubjectParentId();
+        String subjectId = courseQuery.getSubjectId();
         String gmt_create = courseQuery.getGmt_create();
 
         QueryWrapper<EduCourse> wrapper = new QueryWrapper();
@@ -248,8 +252,17 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         if(!StringUtils.isEmpty(title)){
             wrapper.like("title",title);
         }
+        if(!StringUtils.isEmpty(teacherId)){
+            wrapper.eq("teacher_id",teacherId);
+        }
         if(!StringUtils.isEmpty(status)){
             wrapper.eq("status",status);
+        }
+        if (!StringUtils.isEmpty(subjectParentId)) {
+            wrapper.ge("subject_parent_id", subjectParentId);
+        }
+        if (!StringUtils.isEmpty(subjectId)) {
+            wrapper.ge("subject_id", subjectId);
         }
         if(!StringUtils.isEmpty(gmt_create)){
             wrapper.ge("gmt_create",gmt_create);

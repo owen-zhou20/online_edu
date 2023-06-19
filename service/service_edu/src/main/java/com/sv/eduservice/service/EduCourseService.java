@@ -34,7 +34,7 @@ public interface EduCourseService extends IService<EduCourse> {
     CoursePublishVo publishCourseInfo(String id);
 
     // Delete course
-    void removeCourse(String courseId);
+    boolean removeCourse(String courseId);
 
     // 1. pagination select course list front
     Map<String, Object> getCourseFrontList(Page<EduCourse> pageCourse, CourseFrontVo courseFrontVo);

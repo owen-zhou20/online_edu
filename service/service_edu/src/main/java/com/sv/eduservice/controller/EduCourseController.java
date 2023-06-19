@@ -113,8 +113,12 @@ public class EduCourseController {
     // Delete course
     @DeleteMapping("{courseId}")
     public R deleteCourse(@PathVariable String courseId){
-        courseService.removeCourse(courseId);
-        return R.ok();
+        boolean rs = courseService.removeCourse(courseId);
+        if(rs){
+            return R.ok();
+        }else{
+            return R.error();
+        }
     }
 
 }
