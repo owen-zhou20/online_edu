@@ -1,6 +1,5 @@
 package com.sv.vod.controller;
 
-import com.aliyuncs.AcsResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
@@ -32,23 +31,11 @@ public class VodController {
         return R.ok().data("videoId",videoId);
     }
 
-    // 2. Delete a upload video from Ali VOD
+    // 2. Delete a video from Ali VOD
     @DeleteMapping("removeAliVodVideo/{id}")
     public R removeAliVodVideo(@PathVariable String id){
-        try{
-            // Init client
-            DefaultAcsClient client = InitVodClient.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
-            // Init request and response for delete
-            DeleteVideoRequest request = new DeleteVideoRequest();
-            DeleteVideoResponse response = new DeleteVideoResponse();
-            request.setVideoIds(id);
-            response = client.getAcsResponse(request);
-            return R.ok();
-
-        }catch(Exception e){
-            e.printStackTrace();
-            throw new SvException(20001, "Fail to delete this video!");
-        }
+        vodService.removeAliVodVideo(id);
+        return R.ok();
     }
 
     // 3. Batch delete videos

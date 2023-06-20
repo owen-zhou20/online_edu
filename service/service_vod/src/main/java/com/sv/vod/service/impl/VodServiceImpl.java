@@ -20,7 +20,7 @@ import java.util.List;
 
 @Service
 public class VodServiceImpl implements VodService {
-    // Upload video to Ali cloud Vod
+    // 1. Upload video to Ali Vod
     @Override
     public String uploadVideoAliVod(MultipartFile file) {
         try{
@@ -69,17 +69,36 @@ public class VodServiceImpl implements VodService {
                 //System.out.print("VideoId=" + response.getVideoId() + "\n");
                 System.out.print("ErrorCode=" + response.getCode() + "\n");
                 System.out.print("ErrorMessage=" + response.getMessage() + "\n");
+                if(StringUtils.isEmpty(videoId)){
+                    throw new SvException(20001, response.getMessage());
+                }
                 videoId = response.getVideoId();
             }
             return videoId;
         } catch(Exception e){
             e.printStackTrace();
-            new SvException(20001,"File to upload this video");
-            return null;
+            throw new SvException(20001,"File to upload this video");
         }
     }
 
-    // Batch delete videos
+    // 2. Delete a video from Ali VOD
+    @Override
+    public void removeAliVodVideo(String id) {
+        try{
+            // Init client
+            DefaultAcsClient client = InitVodClient.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
+            // Init request and response for delete
+            DeleteVideoRequest request = new DeleteVideoRequest();
+            DeleteVideoResponse response = new DeleteVideoResponse();
+            request.setVideoIds(id);
+            response = client.getAcsResponse(request);
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new SvException(20001, "Fail to delete this video!");
+        }
+    }
+
+    // 3. Batch delete videos
     @Override
     public void removeMoreAliVodVideo(List videoIdList) {
         try{
@@ -93,7 +112,9 @@ public class VodServiceImpl implements VodService {
             response = client.getAcsResponse(request);
         }catch(Exception e){
             e.printStackTrace();
-            throw new SvException(20001, "Fail to delete this video!");
+            throw new SvException(20001, "Fail to delete videos!");
         }
     }
+
+
 }

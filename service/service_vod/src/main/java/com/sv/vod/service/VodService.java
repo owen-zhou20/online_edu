@@ -5,9 +5,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface VodService {
-    // Upload video to Ali cloud Vod
+    // 1. Upload video to Ali Vod
     String uploadVideoAliVod(MultipartFile file);
 
-    // Batch delete videos
+    // 2. Delete a video from Ali VOD
+    void removeAliVodVideo(String id);
+
+    // 3. Batch delete videos
     void removeMoreAliVodVideo(List videoIdList);
+
+
 }

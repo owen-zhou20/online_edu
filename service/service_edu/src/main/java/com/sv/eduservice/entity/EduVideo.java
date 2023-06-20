@@ -42,10 +42,10 @@ public class EduVideo implements Serializable {
     @ApiModelProperty(value = "Video title")
     private String title;
 
-    @ApiModelProperty(value = "Video source Id in Vod Cloud")
+    @ApiModelProperty(value = "Video source Id in Ali Vod")
     private String videoSourceId;
 
-    @ApiModelProperty(value = "Video original name in Vod Cloud")
+    @ApiModelProperty(value = "Video original name in Ali Vod")
     private String videoOriginalName;
 
     @ApiModelProperty(value = "Sort")
