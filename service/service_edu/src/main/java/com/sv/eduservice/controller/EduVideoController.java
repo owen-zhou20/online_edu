@@ -40,7 +40,7 @@ public class EduVideoController {
         return R.ok();
     }
 
-    // Delete video also delete video from Ali VOD  TODO serviceImpl
+    // Delete video also delete video from Ali VOD
     @DeleteMapping("{id}")
     public R deleteVideo(@PathVariable String id){
         // Get Vod video source id by video id

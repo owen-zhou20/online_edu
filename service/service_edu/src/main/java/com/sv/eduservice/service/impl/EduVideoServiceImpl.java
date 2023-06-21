@@ -6,6 +6,7 @@ import com.sv.eduservice.entity.EduVideo;
 import com.sv.eduservice.mapper.EduVideoMapper;
 import com.sv.eduservice.service.EduVideoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sv.servicebase.exceptionhandler.SvException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -43,6 +44,7 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
                 videoIds.add(eduVideo.getVideoSourceId());
             }
         }
+        // batch delete from vod
         if(videoIds.size() > 0){
             // Delete videos by videoIds
             vodClient.deleteBatch(videoIds);

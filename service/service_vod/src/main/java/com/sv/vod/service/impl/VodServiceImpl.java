@@ -100,17 +100,34 @@ public class VodServiceImpl implements VodService {
 
     // 3. Batch delete videos
     @Override
-    public void removeMoreAliVodVideo(List videoIdList) {
+    public void removeMoreAliVodVideo(List<String> videoIdList) {
         try{
+            if(videoIdList.size()>20){
+                throw new SvException(20001,"The videoIdList must less 20 videos in batch delete!");
+            }
             // Init client
             DefaultAcsClient client = InitVodClient.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
             // Init request and response for delete
             DeleteVideoRequest request = new DeleteVideoRequest();
             DeleteVideoResponse response = new DeleteVideoResponse();
-            String videoIds = StringUtils.join(videoIdList.toArray(), ",");
-            request.setVideoIds(videoIds);
-            response = client.getAcsResponse(request);
-        }catch(Exception e){
+            //String videoIds = StringUtils.join(videoIdList.toArray(), ",");
+            //request.setVideoIds(videoIds);
+            //response = client.getAcsResponse(request);
+            // Not more than 20 once as Vod request
+            // A maximum of 20 video IDs can be specified at a time. Separate multiple IDs with commas (,).
+            int size = videoIdList.size();
+            StringBuffer idListStr = new StringBuffer();
+            for (int i = 1; i <= size; i++) {
+                idListStr.append(videoIdList.get(i - 1));
+                if (i == size || i % 20 == 0) {
+                    request.setVideoIds(idListStr.toString());
+                    client.getAcsResponse(request);
+                    idListStr = new StringBuffer();
+                } else {
+                    idListStr.append(",");
+                }
+            }
+        } catch(Exception e){
             e.printStackTrace();
             throw new SvException(20001, "Fail to delete videos!");
         }

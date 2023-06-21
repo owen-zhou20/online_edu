@@ -12,7 +12,7 @@ public interface VodService {
     void removeAliVodVideo(String id);
 
     // 3. Batch delete videos
-    void removeMoreAliVodVideo(List videoIdList);
+    void removeMoreAliVodVideo(List<String> videoIdList);
 
 
 }
