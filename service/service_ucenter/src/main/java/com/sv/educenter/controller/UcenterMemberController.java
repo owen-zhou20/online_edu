@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
- * 会员表 前端控制器
+ * User member center controller
  * </p>
  *
  * @author Owen

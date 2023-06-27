@@ -71,6 +71,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     // Do assign
     @Override
     public void saveRolePermissionRealtionShipSv(String roleId, String[] permissionId) {
+        rolePermissionService.remove(new QueryWrapper<RolePermission>().eq("role_id", roleId));
         // create rolePermissionList for save
         List<RolePermission> rolePermissionList = new ArrayList<>();
         for (String perId : permissionId) {
@@ -220,9 +221,11 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         } else {
             selectPermissionList = baseMapper.selectPermissionByUserId(userId);
         }
-
+        System.out.println("selectPermissionList===>"+selectPermissionList.toString());
         List<Permission> permissionList = PermissionHelper.bulid(selectPermissionList);
+        System.out.println("permissionList===>"+permissionList.toString());
         List<JSONObject> result = MemuHelper.bulid(permissionList);
+        System.out.println("result===>"+result.toString());
         return result;
     }
 

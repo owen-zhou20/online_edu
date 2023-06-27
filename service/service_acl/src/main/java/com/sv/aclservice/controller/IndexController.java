@@ -33,6 +33,7 @@ public class IndexController {
         //get current username from security
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Map<String, Object> userInfo = indexService.getUserInfo(username);
+        System.out.println("userInfo===>"+userInfo.toString());
         return R.ok().data(userInfo);
     }
 
@@ -45,6 +46,7 @@ public class IndexController {
         //get current username
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<JSONObject> permissionList = indexService.getMenu(username);
+        System.out.println("permissionList===>"+permissionList.toString());
         return R.ok().data("permissionList", permissionList);
     }
 

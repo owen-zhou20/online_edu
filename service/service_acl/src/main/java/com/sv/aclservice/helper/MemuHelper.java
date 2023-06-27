@@ -24,6 +24,7 @@ public class MemuHelper {
      */
     public static List<JSONObject> bulid(List<Permission> treeNodes) {
         List<JSONObject> meuns = new ArrayList<>();
+        System.out.println("treeNodes.size()===>"+treeNodes.size());
         if(treeNodes.size() == 1) {
             Permission topNode = treeNodes.get(0);
             //左侧一级菜单

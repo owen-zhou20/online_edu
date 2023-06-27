@@ -65,7 +65,7 @@ public class IndexServiceImpl implements IndexService {
     }
 
     /**
-     * 根据用户名获取动态菜单
+     * get menuList by user Id
      * @param username
      * @return
      */

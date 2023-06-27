@@ -15,7 +15,7 @@ public interface IndexService {
     Map<String, Object> getUserInfo(String username);
 
     /**
-     * 根据用户名获取动态菜单
+     * get permissionList for current user
      * @param username
      * @return
      */

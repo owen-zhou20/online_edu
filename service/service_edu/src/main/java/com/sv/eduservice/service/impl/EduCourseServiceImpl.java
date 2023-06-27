@@ -84,6 +84,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     public CourseInfoVo getCourseInfo(String courseId) {
         // 1. Select edu_course table from DB
         EduCourse eduCourse = baseMapper.selectById(courseId);
+        //System.out.println("course===>"+eduCourse.toString());
         if(eduCourse == null){
             throw new SvException(20001,"This course is not exist!");
         }
@@ -103,6 +104,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     @Override
     @Transactional
     public void updataCourseInfo(CourseInfoVo courseInfoVo) {
+        System.out.println("courseInfoVo===>"+courseInfoVo.toString());
         // 1. Update edu_course table from DB
         EduCourse eduCourse = new EduCourse();
         BeanUtils.copyProperties(courseInfoVo, eduCourse);
@@ -115,7 +117,8 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         EduCourseDescription courseDescription = new EduCourseDescription();
         courseDescription.setId(courseInfoVo.getId());
         courseDescription.setDescription(courseInfoVo.getDescription());
-        boolean rsDesc = courseDescriptionService.updateById(courseDescription);
+        boolean rsDesc = courseDescriptionService.saveOrUpdate(courseDescription);
+        System.out.println("rsDesc===>"+rsDesc);
         if(rsDesc == false){
             throw new SvException(20001, "Fail to modify course description!");
         }
@@ -246,6 +249,9 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         String subjectParentId = courseQuery.getSubjectParentId();
         String subjectId = courseQuery.getSubjectId();
         String gmt_create = courseQuery.getGmt_create();
+        String gmt_end = courseQuery.getGmt_end();
+        System.out.println("gmt_create===>"+gmt_create);
+        System.out.println("gmt_end===>"+gmt_end);
 
         QueryWrapper<EduCourse> wrapper = new QueryWrapper();
 
@@ -259,13 +265,16 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             wrapper.eq("status",status);
         }
         if (!StringUtils.isEmpty(subjectParentId)) {
-            wrapper.ge("subject_parent_id", subjectParentId);
+            wrapper.eq("subject_parent_id", subjectParentId);
         }
         if (!StringUtils.isEmpty(subjectId)) {
-            wrapper.ge("subject_id", subjectId);
+            wrapper.eq("subject_id", subjectId);
         }
         if(!StringUtils.isEmpty(gmt_create)){
             wrapper.ge("gmt_create",gmt_create);
+        }
+        if(!StringUtils.isEmpty(gmt_end)){
+            wrapper.le("gmt_create",gmt_end);
         }
 
         //sort by create time

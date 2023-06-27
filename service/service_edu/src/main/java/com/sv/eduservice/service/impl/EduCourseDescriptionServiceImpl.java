@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * Course description
+ * Course description ServiceImpl
  * </p>
  *
  * @author Owen
