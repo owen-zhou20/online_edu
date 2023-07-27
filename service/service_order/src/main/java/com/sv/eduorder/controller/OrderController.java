@@ -6,13 +6,15 @@ import com.sv.commonutils.JwtUtils;
 import com.sv.commonutils.R;
 import com.sv.eduorder.entity.Order;
 import com.sv.eduorder.service.OrderService;
+import com.sv.servicebase.exceptionhandler.SvException;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
- * 订单 前端控制器
+ * Order controller
  * </p>
  *
  * @author Owen
@@ -26,10 +28,13 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    // 1. add order
+    // 1. Add an order by courseId and memberId. return orderNo
     @PostMapping("createOrder/{courseId}")
     public R saveOrder(@PathVariable String courseId, HttpServletRequest request){
         String memberId = JwtUtils.getMemberIdByJwtToken(request);
+        if(Strings.isEmpty(memberId)){
+            throw new SvException(20001,"Please login!");
+        }
         String orderNo = orderService.createOrders(courseId, memberId);
         return R.ok().data("orderNo",orderNo);
     }

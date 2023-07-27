@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 会员表 Mapper 接口
+ * Ucenter Member Mapper
  * </p>
  *
  * @author Owen
@@ -13,6 +13,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface UcenterMemberMapper extends BaseMapper<UcenterMember> {
 
-    // Get count No. of register member for one day
+    // Get count Number of register member for one day for sta
     Integer countRegisterDay(String day);
 }

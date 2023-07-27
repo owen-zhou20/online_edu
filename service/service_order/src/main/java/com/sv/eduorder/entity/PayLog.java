@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 支付日志表
+ * PayLog entity
  * </p>
  *
  * @author Owen
@@ -24,43 +24,44 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_pay_log")
-@ApiModel(value="PayLog对象", description="支付日志表")
+@ApiModel(value="PayLog entity", description="PayLog entity for member")
 public class PayLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.ID_WORKER_STR)
+    @ApiModelProperty(value = "Id")
     private String id;
 
-    @ApiModelProperty(value = "订单号")
+    @ApiModelProperty(value = "Order Number")
     private String orderNo;
 
-    @ApiModelProperty(value = "支付完成时间")
+    @ApiModelProperty(value = "Payment time")
     private Date payTime;
 
-    @ApiModelProperty(value = "支付金额（分）")
+    @ApiModelProperty(value = "Total Payment Fee(AUD)")
     private BigDecimal totalFee;
 
-    @ApiModelProperty(value = "交易流水号")
+    @ApiModelProperty(value = "Transaction Id")
     private String transactionId;
 
-    @ApiModelProperty(value = "交易状态")
+    @ApiModelProperty(value = "Trade State")
     private String tradeState;
 
-    @ApiModelProperty(value = "支付类型（1：微信 2：支付宝）")
+    @ApiModelProperty(value = "Pay Type（1：WeChat 2：Alipay）")
     private Integer payType;
 
-    @ApiModelProperty(value = "其他属性")
+    @ApiModelProperty(value = "Other Attributes")
     private String attr;
 
-    @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
+    @ApiModelProperty(value = "Logic Delete. 1（true）deleted， 0（false）not deleted")
     private Integer isDeleted;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "Create Time")
     @TableField(fill = FieldFill.INSERT)
     private Date gmtCreate;
 
-    @ApiModelProperty(value = "更新时间")
+    @ApiModelProperty(value = "Update Time")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 

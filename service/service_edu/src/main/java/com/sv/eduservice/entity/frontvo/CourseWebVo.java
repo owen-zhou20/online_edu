@@ -6,7 +6,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
-@ApiModel(value="Course info", description="course describe in front web")
+@ApiModel(value="Course info for each course", description="course describe in front web")
 @Data
 public class CourseWebVo {
 

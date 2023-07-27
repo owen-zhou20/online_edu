@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 支付日志表 前端控制器
+ * Pay log controller
  * </p>
  *
  * @author Owen
@@ -46,7 +46,7 @@ public class PayLogController {
             payLogService.updateOrderStatus(map);
             return R.ok().message("Success to pay!");
         }
-            return R.ok().code(25000).message("Waiting payment to finish!");
+            return R.ok().code(25000).message("Wait payment to finish!");
 
     }
 

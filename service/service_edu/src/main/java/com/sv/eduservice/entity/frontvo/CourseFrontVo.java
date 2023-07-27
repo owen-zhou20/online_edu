@@ -1,9 +1,10 @@
 package com.sv.eduservice.entity.frontvo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-
+@ApiModel(value="Course front list vo", description="course info in front web")
 @Data
 public class CourseFrontVo{
 

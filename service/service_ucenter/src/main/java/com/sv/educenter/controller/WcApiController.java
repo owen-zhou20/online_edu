@@ -94,7 +94,7 @@ public class WcApiController {
             UcenterMember member = memberService.getOpenIdMember(openid);
 
             if(member == null){ // Add this userInfo into DB if member is empty
-
+                System.out.println("New member register");
                 // 3. Go to Wechat url to get userInfo use access_token and openid
                 // Go to Wechat baseUserInfoUrl to get userInfo
                 String baseUserInfoUrl = "https://api.weixin.qq.com/sns/userinfo" +
@@ -117,13 +117,14 @@ public class WcApiController {
                 member.setNickname(nickname);
                 member.setAvatar(headimgurl);
                 memberService.save(member);
+                member = memberService.getOpenIdMember(openid);
             }
 
             // Get token by member user jwt
-            String jwtToken = JwtUtils.getJwtToken(member.getId(), member.getNickname());
-
+            String token = JwtUtils.getJwtToken(member.getId(), member.getNickname());
+            System.out.println("jwtToken=========>"+token);
             // send token to homepage
-            return "redirect:http://localhost:3000?token="+jwtToken;
+            return "redirect:http://localhost:3000?token="+token;
         } catch (Exception e) {
             throw new SvException(20001, e.getMessage());
         }

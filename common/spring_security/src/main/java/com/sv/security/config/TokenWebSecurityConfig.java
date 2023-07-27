@@ -55,7 +55,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new UnauthorizedEntryPoint()) // no permission
                 .and().csrf().disable()// csrf off
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                .anyRequest().authenticated() //any request must have auths
                 .and().logout().logoutUrl("/admin/acl/index/logout")// logout url
                 .addLogoutHandler(new TokenLogoutHandler(tokenManager,redisTemplate)).and()// logout handler
                 .addFilter(new TokenLoginFilter(authenticationManager(), tokenManager, redisTemplate))// add authentication filter
@@ -81,6 +81,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/api/**",
                 "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**"
+                //"/eduservice/coursefront/**","/eduservice/indexfront","/eduservice/teacherfront"
                );
     }
 }

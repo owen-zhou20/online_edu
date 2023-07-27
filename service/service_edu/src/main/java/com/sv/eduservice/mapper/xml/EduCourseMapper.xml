@@ -23,7 +23,7 @@
     <select id="getBaseCourseInfo" resultType="com.sv.eduservice.entity.frontvo.CourseWebVo">
         SELECT ec.id,
                ec.title,
-               ec.price,
+               CONVERT(ec.price, DECIMAL(8,2)) AS price,
                ec.lesson_num AS lessonNum,
                ec.cover,
                ec.buy_count AS buyCount,

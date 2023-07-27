@@ -90,6 +90,6 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException e) throws IOException, ServletException {
-        ResponseUtil.out(response, R.error()); // return error to front-end
+        ResponseUtil.out(response, R.error().message("Username and password is incorrect!!!")); // return error to front-end
     }
 }

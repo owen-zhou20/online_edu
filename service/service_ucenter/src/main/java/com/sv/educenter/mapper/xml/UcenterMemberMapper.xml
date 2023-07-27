@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sv.educenter.mapper.UcenterMemberMapper">
 
-    <!--Get count No. of register member for one day -->
+    <!-- Get count Number of register member for one day for sta -->
     <select id="countRegisterDay" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM ucenter_member uc
                         WHERE DATE(uc.gmt_create) = #{day}

@@ -17,6 +17,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+/**
+ * test new function model Canal
+ */
 @Component
 public class CanalClient {
         //sql队列

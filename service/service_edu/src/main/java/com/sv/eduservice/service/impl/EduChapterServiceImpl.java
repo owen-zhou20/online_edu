@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * <p>
- * 课程 服务实现类
+ * Course chapter serviceImpl
  * </p>
  *
  * @author Owen

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 订单 服务实现类
+ * Order serviceImpl
  * </p>
  *
  * @author Owen
@@ -29,7 +29,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     @Autowired
     private UcenterClient ucenterClient;
 
-    // 1. add order
+    // 1. Add an order by courseId and memberId. return orderNo
     @Override
     public String createOrders(String courseId, String memberId) {
         // user openfeign get member info by member id

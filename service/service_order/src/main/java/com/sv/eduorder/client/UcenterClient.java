@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient("service-ucenter")
 public interface UcenterClient {
 
-    // Get member info by member id
+    // Get member info by member id for member
     @PostMapping("/educenter/member/getMemberInfoOrder/{id}")
     public UcenterMemberOrder getMemberInfoOrder(@PathVariable("id") String id);
 

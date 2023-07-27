@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@ApiModel(value="register entity", description="register entity")
+@ApiModel(value="Member register entity", description="Member register entity")
 public class RegisterVo {
     @ApiModelProperty(value = "nickname")
     private String nickname;

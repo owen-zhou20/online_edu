@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 网站统计日数据 前端控制器
+ * Statistics daily controller
  * </p>
  *
  * @author Owen
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/statistics/StaDaily")
-@CrossOrigin
+//@CrossOrigin
 public class StatisticsDailyController {
     @Autowired
     private StatisticsDailyService staService;

@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 网站统计日数据 服务实现类
+ * Statistics daily serviceImpl
  * </p>
  *
  * @author Owen
@@ -32,6 +33,7 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
     private UcenterClient ucenterClient;
 
     // Get count No. of register member for one day
+    @Transactional
     @Override
     public void registerCount(String day) {
         // delete all data for this day before add
@@ -46,12 +48,12 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
 
         // put data into statistics_daily table in online_edu database
         StatisticsDaily sta = new StatisticsDaily();
-        sta.setRegisterNum(countRegister); // register No.
+        sta.setRegisterNum(countRegister); // register number
         sta.setDateCalculated(day); // which day
 
-        sta.setVideoViewNum(RandomUtils.nextInt(100,200));
-        sta.setLoginNum(RandomUtils.nextInt(100,200));
-        sta.setCourseNum(RandomUtils.nextInt(100,200));
+        sta.setVideoViewNum(RandomUtils.nextInt(100,200)); //TODO
+        sta.setLoginNum(RandomUtils.nextInt(100,200)); //TODO
+        sta.setCourseNum(RandomUtils.nextInt(100,200)); //TODO
 
         baseMapper.insert(sta);
 
@@ -66,6 +68,7 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
         QueryWrapper<StatisticsDaily> wrapper = new QueryWrapper<>();
         wrapper.between("date_calculated",begin,end);
         wrapper.select("date_calculated",type);
+        wrapper.orderByAsc("date_calculated");
         List<StatisticsDaily> staList = baseMapper.selectList(wrapper);
         System.out.println("staList ===>" + staList);
 

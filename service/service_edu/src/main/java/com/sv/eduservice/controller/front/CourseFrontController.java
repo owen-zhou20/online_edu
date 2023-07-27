@@ -64,7 +64,7 @@ public class CourseFrontController {
         }
     }
 
-    // Get course info by course id
+    // Get course info by course id for order
     @PostMapping("getCourseInfoOrder/{id}")
     public CourseWebVoOrder getCourseInfoOrder(@PathVariable String id){
         CourseWebVo courseInfo = courseService.getBaseCourseInfo(id);

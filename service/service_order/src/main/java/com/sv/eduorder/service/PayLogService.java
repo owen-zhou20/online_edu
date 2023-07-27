@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 支付日志表 服务类
+ * Pay log service
  * </p>
  *
  * @author Owen

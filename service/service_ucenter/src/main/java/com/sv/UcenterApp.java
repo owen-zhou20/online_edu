@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @EnableFeignClients
 @ComponentScan("com.sv")
-@MapperScan("com.sv.educenter.mapper")
+@MapperScan(basePackages = {"com.sv.educenter.mapper"})
 public class UcenterApp
 {
     public static void main( String[] args )

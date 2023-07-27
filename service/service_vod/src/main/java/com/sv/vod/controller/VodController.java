@@ -46,15 +46,15 @@ public class VodController {
     }
 
     // 4. Get video play auth by video id
-    @GetMapping("getPlayAuth/{id}")
-    public R getPlayAuth(@PathVariable String id){
+    @GetMapping("getPlayAuth/{vid}")
+    public R getPlayAuth(@PathVariable String vid){
         try{
             // init entity
             DefaultAcsClient client = InitVodClient.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
             // Get play auth
             GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
-            request.setVideoId(id);
-            System.out.println("--------"+id);
+            request.setVideoId(vid);
+            System.out.println("--------"+vid);
             GetVideoPlayAuthResponse response = client.getAcsResponse(request);
             String playAuth = response.getPlayAuth();
             System.out.println("=======" +playAuth);

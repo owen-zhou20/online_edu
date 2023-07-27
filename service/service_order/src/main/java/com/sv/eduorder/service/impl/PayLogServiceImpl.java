@@ -12,16 +12,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sv.eduorder.utils.HttpClient;
 import com.sv.servicebase.exceptionhandler.SvException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- * 支付日志表 服务实现类
+ * Pay log serviceImpl
  * </p>
  *
  * @author Owen
@@ -32,6 +34,9 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     // Create a Wechat QR code for a course payment
     @Override
@@ -45,20 +50,20 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
             // 2. Set QR code arguments into map
             Map<String, String> map = new HashMap<>();
             map.put("appid", "wx74862e0dfcf69954"); //appid
-            map.put("mch_id", "1558950191"); //partner
-            map.put("nonce_str", WXPayUtil.generateNonceStr()); // random
+            map.put("mch_id", "1558950191"); //partner no.
+            map.put("nonce_str", WXPayUtil.generateNonceStr()); // random string for security
             map.put("body", order.getCourseTitle()); // Title to show: course title
             map.put("out_trade_no", orderNo); // order No.
-            map.put("total_fee", order.getTotalFee().multiply(new BigDecimal("100")).longValue()+""); // course price, String
+            map.put("total_fee", order.getTotalFee().multiply(new BigDecimal("100")).longValue()+""); // course price=>String
             map.put("spbill_create_ip", "127.0.0.1"); // IP address
-            map.put("notify_url", "http://guli.shop/api/order/weixinPay/weixinNotify\n"); //notifyurl
+            map.put("notify_url", "http://guli.shop/api/order/weixinPay/weixinNotify\n"); //notifyurl, recall url
             map.put("trade_type", "NATIVE"); // payment type
 
             // 3.  Send a httpclient request with xml arguments to Wechat url
             HttpClient client = new HttpClient("https://api.mch.weixin.qq.com/pay/unifiedorder");
             // set Xml arguments
-            client.setXmlParam(WXPayUtil.generateSignedXml(map,"T6m9iK73b0kn9g5v426MKfHQH7X8rKwb"));
-            client.setHttps(true); // support Https
+            client.setXmlParam(WXPayUtil.generateSignedXml(map,"T6m9iK73b0kn9g5v426MKfHQH7X8rKwb")); // partner key
+            client.setHttps(true); // use Https
             // send http request by post
             client.post();
             // 4. Get return result from client
@@ -74,6 +79,10 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
             returnMap.put("total_fee", order.getTotalFee());
             returnMap.put("result_code", resultMap.get("result_code")); // status code in result QR code
             returnMap.put("code_url", resultMap.get("code_url"));  // result QR code address
+
+            // cancel this order after 120 minutes without pay
+            //redisTemplate.opsForValue().set(orderNo, returnMap, 120, TimeUnit.MINUTES);
+
             return returnMap;
 
         }catch(Exception e){
@@ -129,16 +138,15 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
 
         // Add this payment record in to t_pay_log table
         PayLog payLog = new PayLog();
-        payLog.setOrderNo(orderNo);
+        payLog.setOrderNo(orderNo); //order No.
         payLog.setPayTime(new Date()); //payment time
         payLog.setPayType(1);// payment type: 1: WeChat
-        payLog.setTotalFee(order.getTotalFee());// total amount (RMB cent)
+        payLog.setTotalFee(order.getTotalFee());// total amount (AUD cent)
         payLog.setTradeState(map.get("trade_state"));// payment status
         payLog.setTransactionId(map.get("transaction_id")); // payment transaction No.
-        payLog.setAttr(JSONObject.toJSONString(map)); // other attr in map
+        payLog.setAttr(JSONObject.toJSONString(map)); // all attrs in map for this payment
         baseMapper.insert(payLog);// add this payment record in to t_pay_log table
         return;
-
 
     }
 }

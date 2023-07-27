@@ -27,36 +27,37 @@ public class BannerAdminController {
     // Get a banner info by id
     @GetMapping("get/{id}")
     public R get(@PathVariable String id){
-        CrmBanner banner = bannerService.getById(id);
+        CrmBanner banner = bannerService.getBannerById(id);
         return R.ok().data("banner", banner);
     }
 
     // Pagination select banner list
-    @GetMapping("pageBanner/{page}/{limit}")
-    public R pageBanner(@PathVariable long page, @PathVariable long limit){
+    @PostMapping("pageBanner/{page}/{limit}")
+    public R pageBanner(@PathVariable long page, @PathVariable long limit,
+                        @RequestBody(required = false) CrmBanner crmBanner) {
         Page<CrmBanner> pageBanner = new Page<>(page,limit);
-        bannerService.page(pageBanner,null);
+        bannerService.pageBanner(pageBanner,crmBanner);
         return R.ok().data("items", pageBanner.getRecords()).data("total", pageBanner.getTotal());
     }
 
-    // Add banner
+    // Add a banner
     @PostMapping("addBanner")
     public R addBanner(@RequestBody CrmBanner crmBanner){
-        bannerService.save(crmBanner);
+        bannerService.saveBanner(crmBanner);
         return R.ok();
     }
 
     // Update a banner info by id
     @PutMapping("update")
     public R updateById(@RequestBody CrmBanner crmBanner){
-        bannerService.updateById(crmBanner);
+        bannerService.updateBannerById(crmBanner);
         return R.ok();
     }
 
     // Delete a banner by id
     @DeleteMapping("remove/{id}")
     public R removeBanner(@PathVariable String id){
-        bannerService.removeById(id);
+        bannerService.removeBannerById(id);
         return R.ok();
     }
 }

@@ -14,7 +14,6 @@ public class ScheduledTask {
     private StatisticsDailyService staService;
 
     /**
-     * 每天凌晨1点执行定时
      * Run once every day in AM 1:00
      * Select statistics data for yesterday and add to database
      */
@@ -27,12 +26,12 @@ public class ScheduledTask {
     }
 
     /**
-     * 测试 test scheduled task
-     * 每天七点到二十三点每五秒执行一次
+     * test scheduled task
+     * Run once every 5s from 7:00 AM to 23:00 PM per day
 
     @Scheduled(cron = "0/5 * * * * ?")
     public void task1() {
-        System.out.println("*********++++++++++++*****执行了");
+        System.out.println("*********++++++++++++*****task1 running!");
     }
      */
 

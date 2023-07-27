@@ -3,6 +3,7 @@ package com.sv.eduservice.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sv.eduservice.client.OssClient;
 import com.sv.eduservice.entity.EduCourse;
 import com.sv.eduservice.entity.EduCourseDescription;
 import com.sv.eduservice.entity.frontvo.CourseFrontVo;
@@ -20,6 +21,7 @@ import com.sv.eduservice.utils.ConstantCourseUtils;
 import com.sv.servicebase.exceptionhandler.SvException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -49,6 +51,9 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduChapterService chapterService;
+
+    @Autowired
+    private OssClient ossClient;
 
     // Add course
     @Override
@@ -146,7 +151,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         // 3. Delete course description by course id
         courseDescriptionService.removeById(courseId);
 
-        // 4. Delete course by course id
+        // 4. Delete course cover in Ali oss
+        EduCourse eduCourse = baseMapper.selectById(courseId);
+        if(!StringUtils.isEmpty(eduCourse)){
+            ossClient.deleteOssFile(eduCourse.getCover());
+        }
+
+        // 5. Delete course by course id
         int rs = baseMapper.deleteById(courseId);
         if(rs == 0){
             throw new SvException(20001, "Fail to delete this course!");
@@ -191,6 +202,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             }
         }
 
+        // view count
+        if (StringUtils.isEmpty(courseFrontVo.getPriceSort()) && StringUtils.isEmpty(courseFrontVo.getGmtCreateSort())
+            && StringUtils.isEmpty(courseFrontVo.getBuyCountSort())) {
+                wrapper.orderByDesc("view_count");
+        }
+
         baseMapper.selectPage(pageCourse,wrapper);
 
         // Get pagination select course data and put into map
@@ -215,10 +232,19 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         return map;
     }
 
-    // Get course info by id
+    // Get course info by course id for order
     @Override
     public CourseWebVo getBaseCourseInfo(String courseId) {
+        this.updatePageViewCount(courseId);
         return baseMapper.getBaseCourseInfo(courseId);
+    }
+
+    // Update course view count by courseId
+    @Override
+    public void updatePageViewCount(String courseId){
+        EduCourse course = baseMapper.selectById(courseId);
+        course.setViewCount(course.getViewCount() +1);
+        baseMapper.updateById(course);
     }
 
     // Change publish course status
@@ -282,5 +308,16 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
         baseMapper.selectPage(pageCourse, wrapper);
         return pageCourse;
+    }
+
+    // Get courses for homepage
+    @Cacheable(key = "'selectCourseList'",value = "homepage")
+    @Override
+    public List<EduCourse> getCourseHomepage() {
+        QueryWrapper<EduCourse> wrapperC = new QueryWrapper<>();
+        wrapperC.orderByDesc("view_count");
+        wrapperC.last("limit 8");
+        List<EduCourse> courseList = baseMapper.selectList(wrapperC);
+        return courseList;
     }
 }

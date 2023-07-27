@@ -9,6 +9,7 @@ import com.sv.eduservice.entity.vo.CourseInfoVo;
 import com.sv.eduservice.entity.vo.CoursePublishVo;
 import com.sv.eduservice.entity.vo.CourseQuery;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,12 +40,18 @@ public interface EduCourseService extends IService<EduCourse> {
     // 1. pagination select course list front
     Map<String, Object> getCourseFrontList(Page<EduCourse> pageCourse, CourseFrontVo courseFrontVo);
 
-    // Get course info by id
+    // Get course info by course id for order
     CourseWebVo getBaseCourseInfo(String courseId);
+
+    // Update course view count by courseId
+    void updatePageViewCount(String courseId);
 
     // Change publish course status. publish: flag==true, draft: flag==false
     boolean publishCourse(String id, boolean publish);
 
     // Pagination condition select course list
     Page<EduCourse> pageListCourse(Page<EduCourse> pageCourse, CourseQuery courseQuery);
+
+    // Get courses for homepage
+    List<EduCourse> getCourseHomepage();
 }

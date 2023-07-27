@@ -17,7 +17,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * <p>
- * 会员表 服务实现类
+ * User member center serviceImpl
  * </p>
  *
  * @author Owen
@@ -29,7 +29,7 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
-    // Login for user
+    // Login for member
     @Override
     public String login(LoginVo member) {
         // Get mobile and password for login
@@ -45,7 +45,7 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         wrapper.eq("mobile",mobile);
         UcenterMember mobileMember = baseMapper.selectOne(wrapper);
         // Check this mobileMember is not null
-        if(mobileMember == null){
+        if(null == mobileMember){
             throw new SvException(20001,"Fail to login!");
         }
 
@@ -55,21 +55,21 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
             throw new SvException(20001,"Fail to login!");
         }
 
-        // Check is_disabled for this user is not true
+        // Check is_disabled for this member is not true
         if(mobileMember.getIsDisabled()){
-            throw new SvException(20001,"Fail to login!");
+            throw new SvException(20001,"This member is forbidden to login!");
         }
 
         // Success to login
-        // Get token string use JwtUtils
+        // Get token string member JwtUtils
         String jwtToken = JwtUtils.getJwtToken(mobileMember.getId(), mobileMember.getNickname());
 
         return jwtToken;
     }
 
-    // Register user
+    // Register member
     @Override
-    public void register(RegisterVo registerVo) {
+    public boolean register(RegisterVo registerVo) {
         // Get data for register
         String code = registerVo.getCode();
         String mobile = registerVo.getMobile();
@@ -95,19 +95,23 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
             throw new SvException(20001,"Fail to register!");
         }
 
-        // Add user to database
+        // Add member to database
         UcenterMember member = new UcenterMember();
         member.setMobile(mobile);
         member.setNickname(nickname);
         member.setPassword(MD5.encrypt(password));
         member.setIsDisabled(false);
         member.setIsDeleted(false);
-        baseMapper.insert(member);
-
-        return;
+        int rs = baseMapper.insert(member);
+        System.out.println("rs===>"+rs);
+        if(rs == 1){
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    // Check openid in DB, do not add this userInfo if this openid already exist.
+    // Check openid in DB, do not add this memberInfo if this openid already exist.
     @Override
     public UcenterMember getOpenIdMember(String openid) {
         QueryWrapper<UcenterMember> wrapper = new QueryWrapper<>();
@@ -116,7 +120,7 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         return member;
     }
 
-    // Get count No. of register member for one day
+    // Get count Number of register member for one day for sta
     @Override
     public Integer countRegisterDay(String day) {
         Integer count = baseMapper.countRegisterDay(day);

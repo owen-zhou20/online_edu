@@ -7,7 +7,7 @@ import com.sv.educenter.entity.vo.RegisterVo;
 
 /**
  * <p>
- * 会员表 服务类
+ * Ucenter Member service
  * </p>
  *
  * @author Owen
@@ -19,11 +19,11 @@ public interface UcenterMemberService extends IService<UcenterMember> {
     String login(LoginVo member);
 
     // Register user
-    void register(RegisterVo registerVo);
+    boolean register(RegisterVo registerVo);
 
     // Check openid in DB, do not add this userInfo if this openid already exist.
     UcenterMember getOpenIdMember(String openid);
 
-    // Get count No. of register member for one day
+    // Get count Number of register member for one day for sta
     Integer countRegisterDay(String day);
 }

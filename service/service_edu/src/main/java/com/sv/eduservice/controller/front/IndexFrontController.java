@@ -31,15 +31,12 @@ public class IndexFrontController {
     // Select hottest 8 courses and hottest 4 teachers
     @GetMapping("index")
     public R index(){
-        QueryWrapper<EduCourse> wrapperC = new QueryWrapper<>();
-        wrapperC.orderByDesc("id");
-        wrapperC.last("limit 8");
-        List<EduCourse> courseList = courseService.list(wrapperC);
 
-        QueryWrapper<EduTeacher> wrapperT = new QueryWrapper<>();
-        wrapperT.orderByDesc("id");
-        wrapperT.last("limit 4");
-        List<EduTeacher> teacherList = teacherService.list(wrapperT);
+        // Get courses for homepage
+        List<EduCourse> courseList = courseService.getCourseHomepage();
+
+        // Get teachers for homepage
+        List<EduTeacher> teacherList = teacherService.getTeacherHomepage();
 
         return R.ok().data("courseList",courseList).data("teacherList",teacherList);
     }

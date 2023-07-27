@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.Resource;
 
+/**
+ * test new function model Canal
+ */
 @SpringBootApplication
 public class CanalApp implements CommandLineRunner {
 
@@ -16,7 +19,6 @@ public class CanalApp implements CommandLineRunner {
     public static void main( String[] args )
     {
         SpringApplication.run(CanalApp.class, args);
-
     }
 
     @Override

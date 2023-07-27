@@ -20,7 +20,7 @@ import java.util.UUID;
 public class OssServiceImpl implements OssService {
 
 
-    //Upload teacher avatar to Ali Oss
+    //Upload teacher avatar to Ali OSS
     @Override
     public String uploadFile(MultipartFile file) {
         // file url in Ali OSS for return
@@ -79,6 +79,46 @@ public class OssServiceImpl implements OssService {
                 ossClient.shutdown();
             }
             return url;
+        }
+    }
+
+    // delete object from Ali OSS
+    @Override
+    public void deleteOssFile(String avatar) {
+        // In this example, the endpoint of the China (Hangzhou) region is used. Specify your actual endpoint.
+        String endpoint = ConstantPropertiesUtils.END_POINT;
+        // The AccessKey pair of an Alibaba Cloud account has permissions on all API operations. Using these credentials to perform operations in OSS is a high-risk operation. We recommend that you use a RAM user to call API operations or perform routine O&M. To create a RAM user, log on to the RAM console.
+        String accessKeyId = ConstantPropertiesUtils.ACCESS_KEY_ID;
+        String accessKeySecret = ConstantPropertiesUtils.ACCESS_KEY_SECRET;
+        // Specify the name of the bucket. Example: examplebucket.
+        String bucketName = ConstantPropertiesUtils.BUCKET_NAME;
+        // Specify the full path of the object. Do not include the bucket name in the full path.
+        System.out.println("avatar===>"+ avatar);
+        String objectName = avatar.substring(54);
+        System.out.println("avatar.filename===>"+avatar.substring(54));
+
+        // Create an OSSClient instance.
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+
+        try {
+            // Delete the object or the directory. Before you delete a directory, make sure that the directory does not contain objects.
+            ossClient.deleteObject(bucketName, objectName);
+        } catch (OSSException oe) {
+            System.out.println("Caught an OSSException, which means your request made it to OSS, "
+                    + "but was rejected with an error response for some reason.");
+            System.out.println("Error Message:" + oe.getErrorMessage());
+            System.out.println("Error Code:" + oe.getErrorCode());
+            System.out.println("Request ID:" + oe.getRequestId());
+            System.out.println("Host ID:" + oe.getHostId());
+        } catch (ClientException ce) {
+            System.out.println("Caught an ClientException, which means the client encountered "
+                    + "a serious internal problem while trying to communicate with OSS, "
+                    + "such as not being able to access the network.");
+            System.out.println("Error Message:" + ce.getMessage());
+        } finally {
+            if (ossClient != null) {
+                ossClient.shutdown();
+            }
         }
     }
 }

@@ -28,10 +28,10 @@ public class BannerFrontController {
     @Autowired
     private CrmBannerService bannerService;
 
-    // Selete all banners
+    // Selete all banners for homepage
     @GetMapping("getAllBanner")
     public R getAllBanner(){
-        List<CrmBanner> bannerList = bannerService.selectAllBanner();
+        List<CrmBanner> bannerList = bannerService.selectIndexList();
         return R.ok().data("bannerList",bannerList);
     }
 

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ConstantVodUtils implements InitializingBean {
+public class ConstantMsmUtils implements InitializingBean {
 
     // read configuration file
     @Value("${yisha.templateID}")

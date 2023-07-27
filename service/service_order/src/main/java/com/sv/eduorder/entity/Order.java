@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 订单
+ * Order entity
  * </p>
  *
  * @author Owen
@@ -24,58 +24,59 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_order")
-@ApiModel(value="Order对象", description="订单")
+@ApiModel(value="Order entity", description="Order entity for member")
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.ID_WORKER_STR)
+    @ApiModelProperty(value = "Id")
     private String id;
 
-    @ApiModelProperty(value = "订单号")
+    @ApiModelProperty(value = "Order No.")
     private String orderNo;
 
-    @ApiModelProperty(value = "课程id")
+    @ApiModelProperty(value = "Course Id")
     private String courseId;
 
-    @ApiModelProperty(value = "课程名称")
+    @ApiModelProperty(value = "Course Title")
     private String courseTitle;
 
-    @ApiModelProperty(value = "课程封面")
+    @ApiModelProperty(value = "Course cover")
     private String courseCover;
 
-    @ApiModelProperty(value = "讲师ID")
+    @ApiModelProperty(value = "Teacher Id")
     private String teacherId;
 
-    @ApiModelProperty(value = "讲师名称")
+    @ApiModelProperty(value = "Teacher Name")
     private String teacherName;
 
-    @ApiModelProperty(value = "会员id")
+    @ApiModelProperty(value = "Member Id")
     private String memberId;
 
-    @ApiModelProperty(value = "会员昵称")
+    @ApiModelProperty(value = "Member Nickname")
     private String nickname;
 
-    @ApiModelProperty(value = "会员手机")
+    @ApiModelProperty(value = "Member Mobile")
     private String mobile;
 
-    @ApiModelProperty(value = "订单金额（分）")
+    @ApiModelProperty(value = "Order Total Fee(AUD)")
     private BigDecimal totalFee;
 
-    @ApiModelProperty(value = "支付类型（1：微信 2：支付宝）")
+    @ApiModelProperty(value = "Pay Type(1：WeChat 2：Alipay)")
     private Integer payType;
 
-    @ApiModelProperty(value = "订单状态（0：未支付 1：已支付）")
+    @ApiModelProperty(value = "Order Status(0：Not Payed 1：Payed)")
     private Integer status;
 
-    @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
+    @ApiModelProperty(value = "Logic Delete. 1（true）deleted， 0（false）not deleted")
     private Integer isDeleted;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "Create Time")
     @TableField(fill = FieldFill.INSERT)
     private Date gmtCreate;
 
-    @ApiModelProperty(value = "更新时间")
+    @ApiModelProperty(value = "Update Time")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 

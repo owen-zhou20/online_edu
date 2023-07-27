@@ -41,7 +41,7 @@ public class JwtUtils {
     }
 
     /**
-     * 判断token是否存在与有效
+     * check token can be used
      * @param jwtToken
      * @return
      */
@@ -57,7 +57,7 @@ public class JwtUtils {
     }
 
     /**
-     * 判断token是否存在与有效
+     * check token can be used
      * @param request
      * @return
      */
@@ -74,7 +74,7 @@ public class JwtUtils {
     }
 
     /**
-     * 根据token获取会员id
+     * get user id by token
      * @param request
      * @return
      */

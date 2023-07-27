@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 订单 服务类
+ * Order service
  * </p>
  *
  * @author Owen
@@ -13,6 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface OrderService extends IService<Order> {
 
-    // 1. add order
+    // 1. Add an order by courseId and memberId. return orderNo
     String createOrders(String courseId, String memberId);
 }
