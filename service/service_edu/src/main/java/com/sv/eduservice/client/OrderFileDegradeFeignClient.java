@@ -1,6 +1,7 @@
 package com.sv.eduservice.client;
 
 import com.sv.commonutils.R;
+import com.sv.servicebase.exceptionhandler.SvException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -9,6 +10,6 @@ public class OrderFileDegradeFeignClient implements OrdersClient{
 
     @Override
     public boolean isBuyCourse(String courseId, String memberId) {
-        return false;
+        throw new SvException(20001,"Network error! Fail to get isBuyCourse info from Service Order!");
     }
 }

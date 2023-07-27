@@ -9,6 +9,6 @@ public class OssFileDegradeFeignClient implements OssClient{
 
     @Override
     public R deleteOssFile(String avatar){
-        return R.error().message("Network error! Fail to delete this file form Ali OSS");
+        return R.error().message("Network error! Fail to delete this file from Ali OSS");
     }
 }

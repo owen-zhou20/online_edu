@@ -15,7 +15,7 @@ import java.util.Date;
 
 /**
  * <p>
- * Member Vo entity for Order
+ * Member Vo entity for Comment
  * </p>
  *
  * @author Owen
@@ -24,8 +24,8 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="UcenterMemberOrderVo entity ", description="Member Vo entity for Order")
-public class UcenterMemberOrder implements Serializable {
+@ApiModel(value="UcenterMemberCommentVo entity ", description="Member Vo entity for Comment")
+public class UcenterMemberComment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

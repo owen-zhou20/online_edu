@@ -3,6 +3,7 @@ package com.sv.educenter.controller;
 
 import com.sv.commonutils.JwtUtils;
 import com.sv.commonutils.R;
+import com.sv.commonutils.ordervo.UcenterMemberComment;
 import com.sv.commonutils.ordervo.UcenterMemberOrder;
 import com.sv.educenter.entity.UcenterMember;
 import com.sv.educenter.entity.vo.LoginVo;
@@ -82,6 +83,19 @@ public class UcenterMemberController {
     public R countRegister(@PathVariable String day){
         Integer count = memberService.countRegisterDay(day);
         return R.ok().data("countRegister",count);
+    }
+
+
+    // Get member info by member id for comment
+    @PostMapping("getMemberInfoComment/{id}")
+    public UcenterMemberComment getMemberInfoComment(@PathVariable String id) {
+        if(Strings.isEmpty(id)){
+            throw new SvException(20001,"Please login!");
+        }
+        UcenterMember ucenterMember = memberService.getById(id);
+        UcenterMemberComment ucenterMemberComment = new UcenterMemberComment();
+        BeanUtils.copyProperties(ucenterMember,ucenterMemberComment);
+        return ucenterMemberComment;
     }
 
 }
